@@ -1,0 +1,17 @@
+{
+  "sections": {
+    "banner": {
+      "type": "page-banner",
+      "settings": {
+        "eyebrow": "Customer Care",
+        "title": "Warranty Registration",
+        "subtitle": "Register your IYOVA device to activate warranty coverage and receive dedicated support."
+      }
+    },
+    "form": {
+      "type": "warranty-form",
+      "settings": {}
+    }
+  },
+  "order": ["banner", "form"]
+}

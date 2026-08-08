@@ -1,0 +1,214 @@
+<section class="faq full-width">
+  <div class="faq__inner container-editorial">
+    {% capture faq_title %}
+      Questions & <em>Answers</em>
+    {% endcapture %}
+    {% render 'section-head',
+      eyebrow: section.settings.eyebrow,
+      title: faq_title,
+      align: 'center'
+    %}
+
+    {% if section.blocks.size > 0 %}
+      <faq-accordion class="faq__list">
+        {% for block in section.blocks %}
+          <details class="faq__item" {{ block.shopify_attributes }}>
+            <summary class="faq__question">
+              <span>{{ block.settings.question }}</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__answer">
+              {{ block.settings.answer }}
+            </div>
+          </details>
+        {% endfor %}
+      </faq-accordion>
+    {% endif %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .faq {
+    padding-block: 6rem;
+    background: var(--cream);
+  }
+
+  @media (min-width: 768px) {
+    .faq {
+      padding-block: 9rem;
+    }
+  }
+
+  .faq__inner .section-head {
+    margin-bottom: 3rem;
+  }
+
+  .faq__list {
+    display: block;
+    max-width: 48rem;
+    margin-inline: auto;
+  }
+
+  .faq__item {
+    border-top: 1px solid rgba(45, 35, 35, 0.15);
+  }
+
+  .faq__item:last-child {
+    border-bottom: 1px solid rgba(45, 35, 35, 0.15);
+  }
+
+  .faq__question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-block: 1.35rem;
+    list-style: none;
+    cursor: pointer;
+    font-family: var(--font-serif);
+    font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+    line-height: 1.3;
+    color: var(--text-dark);
+  }
+
+  .faq__question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__icon {
+    position: relative;
+    flex: 0 0 auto;
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .faq__icon::before,
+  .faq__icon::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    background: var(--text-dark);
+    transition: transform 0.3s ease;
+  }
+
+  .faq__icon::before {
+    width: 100%;
+    height: 1px;
+  }
+
+  .faq__icon::after {
+    width: 1px;
+    height: 100%;
+  }
+
+  .faq__item[open] .faq__icon::after {
+    transform: rotate(90deg);
+    opacity: 0;
+  }
+
+  .faq__answer {
+    padding-bottom: 1.35rem;
+    padding-right: 2rem;
+    color: var(--muted-foreground);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .faq__answer p + p {
+    margin-top: 0.75rem;
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  class FaqAccordion extends HTMLElement {
+    connectedCallback() {
+      this.items = [...this.querySelectorAll('.faq__item')];
+
+      this.items.forEach((item) => {
+        item.addEventListener('toggle', () => {
+          if (!item.open) return;
+
+          this.items.forEach((other) => {
+            if (other !== item) {
+              other.open = false;
+            }
+          });
+        });
+      });
+    }
+  }
+
+  customElements.define('faq-accordion', FaqAccordion);
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Questions & answers",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Support" }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What makes IYOVA devices different from traditional skincare tools?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Our devices combine advanced technology with considered design — featuring multiple modes, precision engineering, and materials chosen for safer, more effective results at home.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Questions & answers",
+      "blocks": [
+        {
+          "type": "question",
+          "settings": {
+            "question": "What makes IYOVA devices different from traditional skincare tools?",
+            "answer": "<p>Our devices combine advanced technology with considered design — featuring multiple modes, precision engineering, and materials chosen for safer, more effective results at home.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Are IYOVA devices safe for sensitive skin?",
+            "answer": "<p>Yes. All our devices include adjustable intensity settings and skin-friendly materials. We recommend starting on the lowest setting and consulting your dermatologist if you have specific concerns.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Are IYOVA devices suitable for all ages?",
+            "answer": "<p>Our devices are designed for ages 16 and above. For users under 18, we recommend adult supervision and consultation with a dermatologist for specific skin concerns.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Do you offer customer support for device setup?",
+            "answer": "<p>Absolutely. Our team is available via chat, email, and phone — plus detailed video tutorials and user manuals to help you get started with ease.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "What's included in the warranty?",
+            "answer": "<p>Every IYOVA device is backed by a limited warranty. Visit our Warranty Registration page for full details and eligibility.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

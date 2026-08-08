@@ -1,0 +1,120 @@
+<section class="why-iyova full-width">
+  <div class="why-iyova__inner container-editorial">
+    {% capture why_title %}
+      Why <em>IYOVA</em>.
+    {% endcapture %}
+    {% render 'section-head', title: why_title %}
+
+    <div class="why-iyova__grid">
+      {% for block in section.blocks %}
+        <div class="why-iyova__item" {{ block.shopify_attributes }}>
+          <h3 class="why-iyova__title">{{ block.settings.title }}</h3>
+          <p class="why-iyova__text">{{ block.settings.text }}</p>
+          <span class="why-iyova__index">0{{ forloop.index }} / 0{{ section.blocks.size }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .why-iyova {
+    padding-block: 6rem;
+  }
+
+  @media (min-width: 768px) {
+    .why-iyova {
+      padding-block: 9rem;
+    }
+  }
+
+  .why-iyova__inner .section-head {
+    margin-bottom: 4rem;
+  }
+
+  .why-iyova__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    border-top: 1px solid rgba(45, 35, 35, 0.15);
+  }
+
+  @media (min-width: 768px) {
+    .why-iyova__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 3.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .why-iyova__grid {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+  }
+
+  .why-iyova__item {
+    padding-top: 2.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .why-iyova__item {
+      padding-top: 3.5rem;
+      border-right: 1px solid rgba(45, 35, 35, 0.15);
+      padding-right: 2rem;
+    }
+
+    .why-iyova__item:last-child {
+      border-right: none;
+    }
+  }
+
+  .why-iyova__title {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+
+  .why-iyova__text {
+    margin-top: 0.75rem;
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+    line-height: 1.6;
+  }
+
+  .why-iyova__index {
+    display: block;
+    margin-top: 1.5rem;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    color: var(--muted-foreground);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Why IYOVA",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Thoughtful Innovation" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Technology developed with intention and purpose." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Why IYOVA",
+      "blocks": [
+        { "type": "item", "settings": { "title": "Thoughtful Innovation", "text": "Technology developed with intention and purpose." } },
+        { "type": "item", "settings": { "title": "Premium Quality", "text": "Refined materials, considered craftsmanship." } },
+        { "type": "item", "settings": { "title": "Clinically Approved", "text": "Rigorously validated for safety, efficacy, and trusted results." } },
+        { "type": "item", "settings": { "title": "Safe for All Skin Types", "text": "Gentle, considered formulas suitable for every skin type." } },
+        { "type": "item", "settings": { "title": "Clinically Tested Products", "text": "Every device tested to meet the highest clinical standards." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

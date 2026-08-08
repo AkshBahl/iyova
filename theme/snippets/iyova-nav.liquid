@@ -1,0 +1,26 @@
+{% doc %}
+  Default IYOVA primary navigation with mega menu on Shop.
+{% enddoc %}
+
+{% liquid
+  assign about_page = pages['about-us']
+  assign contact_page = pages['contact-us']
+  assign warranty_page = pages['warranty-registration']
+  assign journal_blog = blogs['journal']
+  if journal_blog == blank
+    assign journal_blog = blogs['news']
+  endif
+%}
+
+<div class="site-header__nav-item site-header__nav-item--has-mega">
+  <a href="{{ routes.all_products_collection_url }}" class="site-header__nav-link">{{ 'sections.header.shop' | t }}</a>
+  {% render 'mega-menu', mega_eyebrow: mega_eyebrow, mega_title: mega_title %}
+</div>
+
+<a href="{{ about_page.url | default: '/pages/about-us' }}" class="site-header__nav-link">{{ 'sections.header.about' | t }}</a>
+
+<a href="{{ journal_blog.url | default: routes.blogs_url }}" class="site-header__nav-link">{{ 'sections.header.journal' | t }}</a>
+
+<a href="{{ warranty_page.url | default: '/pages/warranty-registration' }}" class="site-header__nav-link">{{ 'sections.header.warranty' | t }}</a>
+
+<a href="{{ contact_page.url | default: '/pages/contact-us' }}" class="site-header__nav-link">{{ 'sections.header.contact' | t }}</a>

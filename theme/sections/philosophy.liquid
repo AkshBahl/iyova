@@ -1,0 +1,91 @@
+<section class="philosophy full-width">
+  <div class="philosophy__inner container-editorial">
+    <p class="text-eyebrow philosophy__eyebrow">{{ section.settings.eyebrow }}</p>
+
+    <div class="philosophy__lines">
+      <span class="font-display philosophy__line">{{ section.settings.line_1 }}</span>
+      <span class="font-display philosophy__line">{{ section.settings.line_2 }}</span>
+    </div>
+
+    <p class="philosophy__text">{{ section.settings.text }}</p>
+  </div>
+</section>
+
+{% stylesheet %}
+  .philosophy {
+    background: var(--cream);
+    padding-block: 8rem;
+  }
+
+  @media (min-width: 768px) {
+    .philosophy {
+      padding-block: 12rem;
+    }
+  }
+
+  .philosophy__inner {
+    text-align: center;
+  }
+
+  .philosophy__eyebrow {
+    color: var(--luxury-red);
+  }
+
+  .philosophy__lines {
+    margin-top: 2.5rem;
+    max-width: 64rem;
+    margin-inline: auto;
+  }
+
+  .philosophy__line {
+    display: block;
+    font-size: clamp(2.4rem, 6vw, 5.5rem);
+    line-height: 1.05;
+  }
+
+  .philosophy__text {
+    margin-top: 3rem;
+    max-width: 36rem;
+    margin-inline: auto;
+    color: var(--muted-foreground);
+    font-size: 1.125rem;
+    line-height: 1.7;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Philosophy",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "The IYOVA Philosophy"
+    },
+    {
+      "type": "text",
+      "id": "line_1",
+      "label": "Line 1",
+      "default": "Where timeless beauty"
+    },
+    {
+      "type": "text",
+      "id": "line_2",
+      "label": "Line 2",
+      "default": "meets modern innovation."
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Body text",
+      "default": "At IYOVA, we believe beauty technology should feel as beautiful as the results it creates. Our thoughtfully selected innovations transform everyday self-care into elevated rituals."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Philosophy"
+    }
+  ]
+}
+{% endschema %}

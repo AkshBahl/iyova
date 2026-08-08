@@ -1,0 +1,210 @@
+<section class="beauty-tech full-width">
+  <div class="beauty-tech__glow" aria-hidden="true"></div>
+  <div class="beauty-tech__inner container-editorial">
+    <div class="beauty-tech__grid">
+      <div class="beauty-tech__content">
+        <p class="text-eyebrow beauty-tech__eyebrow">{{ section.settings.eyebrow }}</p>
+        <h2 class="font-display beauty-tech__title">
+          {{ section.settings.title_line_1 }}<br>
+          {{ section.settings.title_line_2 }}<br>
+          <em>{{ section.settings.title_emphasis }}</em>
+        </h2>
+
+        <div class="beauty-tech__features">
+          {% for block in section.blocks %}
+            <div class="beauty-tech__feature" {{ block.shopify_attributes }}>
+              <span class="beauty-tech__index">0{{ forloop.index }}</span>
+              <div>
+                <h3 class="text-eyebrow">{{ block.settings.title }}</h3>
+                <p>{{ block.settings.text }}</p>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="beauty-tech__media">
+        <div class="beauty-tech__media-frame">
+          {% if section.settings.image != blank %}
+            {{ section.settings.image | image_url: width: 1000 | image_tag: alt: section.settings.image.alt, class: 'beauty-tech__image' }}
+          {% else %}
+            <img src="{{ 'tech-hero.jpg' | asset_url }}" alt="Beauty technology device" class="beauty-tech__image" loading="lazy">
+          {% endif %}
+        </div>
+
+        <div class="beauty-tech__actions">
+          {% if section.settings.primary_label != blank %}
+            <a href="{{ section.settings.primary_link | default: routes.all_products_collection_url }}" class="btn-red">{{ section.settings.primary_label }}</a>
+          {% endif %}
+          {% if section.settings.secondary_label != blank %}
+            <a href="{{ section.settings.secondary_link }}" class="btn-ghost">{{ section.settings.secondary_label }}</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .beauty-tech {
+    position: relative;
+    overflow: hidden;
+    background: var(--text-dark);
+    color: var(--ivory);
+    padding-block: 6rem;
+  }
+
+  @media (min-width: 768px) {
+    .beauty-tech {
+      padding-block: 9rem;
+    }
+  }
+
+  .beauty-tech__glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.4;
+    background: radial-gradient(ellipse at 70% 40%, rgba(176, 0, 18, 0.35), transparent 55%);
+  }
+
+  .beauty-tech__inner {
+    position: relative;
+  }
+
+  .beauty-tech__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  @media (min-width: 1024px) {
+    .beauty-tech__grid {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+
+    .beauty-tech__content {
+      grid-column: span 6;
+      order: 1;
+    }
+
+    .beauty-tech__media {
+      grid-column: span 6;
+      order: 2;
+    }
+  }
+
+  .beauty-tech__eyebrow {
+    color: var(--rose-beige);
+  }
+
+  .beauty-tech__title {
+    margin-top: 1.25rem;
+    font-size: clamp(2.6rem, 6vw, 5.5rem);
+    line-height: 0.98;
+  }
+
+  .beauty-tech__title em {
+    font-style: italic;
+    color: var(--luxury-red);
+    font-weight: 300;
+  }
+
+  .beauty-tech__features {
+    margin-top: 3.5rem;
+    display: grid;
+    gap: 2rem;
+    max-width: 32rem;
+  }
+
+  .beauty-tech__feature {
+    display: flex;
+    gap: 2rem;
+    border-top: 1px solid rgba(245, 241, 232, 0.15);
+    padding-top: 1.5rem;
+  }
+
+  .beauty-tech__index {
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    color: var(--rose-beige);
+  }
+
+  .beauty-tech__feature p {
+    margin-top: 0.75rem;
+    color: rgba(245, 241, 232, 0.7);
+    line-height: 1.6;
+  }
+
+  .beauty-tech__media {
+    position: relative;
+    max-width: 32rem;
+    margin-inline: auto;
+  }
+
+  .beauty-tech__media-frame {
+    aspect-ratio: 4 / 5;
+  }
+
+  .beauty-tech__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .beauty-tech__actions {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .beauty-tech__actions .btn-ghost {
+    color: var(--ivory);
+    border-color: rgba(245, 241, 232, 0.4);
+  }
+
+  .beauty-tech__actions .btn-ghost:hover {
+    background: var(--ivory);
+    color: var(--text-dark);
+    border-color: var(--ivory);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Beauty tech",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Technology" },
+    { "type": "text", "id": "title_line_1", "label": "Title line 1", "default": "Beauty," },
+    { "type": "text", "id": "title_line_2", "label": "Title line 2", "default": "engineered" },
+    { "type": "text", "id": "title_emphasis", "label": "Title emphasis", "default": "differently." },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "primary_label", "label": "Primary button", "default": "Shop Now" },
+    { "type": "url", "id": "primary_link", "label": "Primary link" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary button", "default": "Explore Product" },
+    { "type": "url", "id": "secondary_link", "label": "Secondary link" }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Intelligent Design" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Thoughtfully engineered technology for modern beauty rituals." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Beauty tech",
+      "blocks": [
+        { "type": "feature", "settings": { "title": "Intelligent Design", "text": "Thoughtfully engineered technology for modern beauty rituals." } },
+        { "type": "feature", "settings": { "title": "Effortless Experience", "text": "Premium beauty care designed to fit seamlessly into everyday life." } },
+        { "type": "feature", "settings": { "title": "Designed to Elevate", "text": "Where performance meets timeless, considered design." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

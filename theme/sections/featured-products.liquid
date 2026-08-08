@@ -1,0 +1,164 @@
+<section class="featured-products full-width">
+  <div class="featured-products__inner container-editorial">
+    {% liquid
+      assign featured_collection = section.settings.collection
+      if featured_collection == blank
+        assign featured_collection = collections.all
+      endif
+    %}
+
+    <div class="featured-products__header">
+      {% capture featured_title %}
+        The IYOVA <em>Edit.</em>
+      {% endcapture %}
+      {% render 'section-head',
+        eyebrow: section.settings.eyebrow,
+        title: featured_title,
+        subtitle: section.settings.subtitle
+      %}
+
+      {% if featured_collection != blank %}
+        <a href="{{ featured_collection.url }}" class="featured-products__view-all">
+          View all products →
+        </a>
+      {% endif %}
+    </div>
+
+    <div class="featured-products__grid">
+      {% if featured_collection.products_count > 0 %}
+        {% for product in featured_collection.products limit: section.settings.products_to_show %}
+          {% render 'product-card', product: product %}
+        {% endfor %}
+      {% else %}
+        {% for i in (1..section.settings.products_to_show) %}
+          <article class="product-card product-card--placeholder">
+            <div class="product-card__media">
+              {{ 'product-apparel-1' | placeholder_svg_tag: 'product-card__image product-card__placeholder' }}
+            </div>
+            <div class="product-card__body">
+              <p class="product-card__type">Product</p>
+              <h3 class="product-card__title">Publish products to see them here</h3>
+            </div>
+          </article>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    {% if featured_collection != blank %}
+      <div class="featured-products__mobile-link">
+        <a href="{{ featured_collection.url }}" class="btn-ghost">View all products</a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .featured-products {
+    padding-block: 6rem;
+  }
+
+  @media (min-width: 768px) {
+    .featured-products {
+      padding-block: 9rem;
+    }
+  }
+
+  .featured-products__header {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 3.5rem;
+  }
+
+  .featured-products__view-all {
+    display: none;
+    font-size: 0.72rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--text-dark);
+    text-decoration: none;
+  }
+
+  .featured-products__view-all:hover {
+    color: var(--luxury-red);
+  }
+
+  @media (min-width: 768px) {
+    .featured-products__view-all {
+      display: inline-flex;
+    }
+  }
+
+  .featured-products__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem 2.5rem;
+    row-gap: 4rem;
+  }
+
+  @media (min-width: 1024px) {
+    .featured-products__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 2.5rem;
+      row-gap: 4rem;
+    }
+  }
+
+  .featured-products__mobile-link {
+    margin-top: 4rem;
+    text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .featured-products__mobile-link {
+      display: none;
+    }
+  }
+
+  .product-card--placeholder .product-card__media {
+    background: var(--cream);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Featured products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "The collection"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Three devices. One considered ritual."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection",
+      "info": "Optional. Defaults to all products when empty."
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 3
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured products"
+    }
+  ]
+}
+{% endschema %}

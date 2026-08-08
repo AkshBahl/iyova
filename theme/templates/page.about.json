@@ -1,0 +1,44 @@
+{
+  "sections": {
+    "main": {
+      "type": "about-page",
+      "blocks": {
+        "v1": {
+          "type": "value",
+          "settings": {
+            "title": "Thoughtful Innovation",
+            "text": "Technology developed with intention and purpose."
+          }
+        },
+        "v2": {
+          "type": "value",
+          "settings": {
+            "title": "Premium Quality",
+            "text": "Refined materials, considered craftsmanship."
+          }
+        },
+        "v3": {
+          "type": "value",
+          "settings": {
+            "title": "Designed for Every Ritual",
+            "text": "Built to move with the rhythm of your day."
+          }
+        }
+      },
+      "block_order": ["v1", "v2", "v3"],
+      "settings": {
+        "eyebrow": "About IYOVA",
+        "title_line_1": "Beauty, elevated",
+        "title_emphasis": "by innovation.",
+        "intro": "IYOVA SKIN creates thoughtfully designed beauty technology — premium devices engineered to elevate your everyday rituals with timeless design and quiet intelligence.",
+        "statement_eyebrow": "The IYOVA Philosophy",
+        "statement_line_1": "Where timeless beauty",
+        "statement_line_2": "meets modern innovation.",
+        "statement_text": "At IYOVA, we believe beauty technology should feel as beautiful as the results it creates. Our thoughtfully selected innovations transform everyday self-care into elevated rituals.",
+        "closing_text": "Every IYOVA device is chosen for performance, materials, and the way it fits into a considered daily ritual — because beauty should feel intentional from the first moment you unbox it.",
+        "button_label": "Shop Collection"
+      }
+    }
+  },
+  "order": ["main"]
+}

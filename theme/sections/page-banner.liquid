@@ -1,0 +1,60 @@
+<section class="page-banner full-width">
+  <div class="page-banner__inner container-editorial">
+    <p class="text-eyebrow page-banner__eyebrow">{{ section.settings.eyebrow }}</p>
+    <h1 class="font-display page-banner__title">{{ section.settings.title | default: page.title }}</h1>
+    {% if section.settings.subtitle != blank %}
+      <p class="page-banner__subtitle">{{ section.settings.subtitle }}</p>
+    {% endif %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .page-banner {
+    padding-top: calc(var(--header-height) + 4rem);
+    padding-bottom: 4rem;
+    background: var(--ivory);
+  }
+
+  @media (min-width: 768px) {
+    .page-banner {
+      padding-bottom: 5rem;
+    }
+  }
+
+  .page-banner__eyebrow {
+    color: var(--luxury-red);
+  }
+
+  .page-banner__title {
+    margin-top: 1rem;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    line-height: 0.98;
+    max-width: 16ch;
+  }
+
+  .page-banner__title em {
+    font-style: italic;
+    color: var(--luxury-red);
+    font-weight: 300;
+  }
+
+  .page-banner__subtitle {
+    margin-top: 1.5rem;
+    max-width: 36rem;
+    color: var(--muted-foreground);
+    font-size: 1.125rem;
+    line-height: 1.7;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Page banner",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "IYOVA SKIN" },
+    { "type": "text", "id": "title", "label": "Title override" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle" }
+  ],
+  "presets": [{ "name": "Page banner" }]
+}
+{% endschema %}

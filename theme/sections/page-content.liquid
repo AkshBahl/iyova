@@ -1,0 +1,94 @@
+<section class="page-content full-width">
+  <div class="page-content__inner container-editorial">
+    <div class="page-content__grid">
+      <div class="page-content__main rte">
+        {% if section.settings.content != blank %}
+          {{ section.settings.content }}
+        {% else %}
+          {{ page.content }}
+        {% endif %}
+      </div>
+
+      {% if section.settings.show_sidebar %}
+        <aside class="page-content__sidebar">
+          {% if section.settings.sidebar_title != blank %}
+            <p class="text-eyebrow page-content__sidebar-title">{{ section.settings.sidebar_title }}</p>
+          {% endif %}
+          {% if section.settings.sidebar_text != blank %}
+            <p class="page-content__sidebar-text">{{ section.settings.sidebar_text }}</p>
+          {% endif %}
+        </aside>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .page-content {
+    padding-bottom: 6rem;
+  }
+
+  @media (min-width: 768px) {
+    .page-content {
+      padding-bottom: 9rem;
+    }
+  }
+
+  .page-content__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  @media (min-width: 1024px) {
+    .page-content__grid {
+      grid-template-columns: 2fr 1fr;
+      gap: 5rem;
+    }
+  }
+
+  .page-content__main {
+    color: var(--text-dark);
+    font-size: 1.05rem;
+    line-height: 1.8;
+  }
+
+  .page-content__main h2,
+  .page-content__main h3 {
+    font-family: var(--font-serif);
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .page-content__main p + p {
+    margin-top: 1rem;
+  }
+
+  .page-content__sidebar {
+    padding: 2rem;
+    background: var(--cream);
+  }
+
+  .page-content__sidebar-title {
+    color: var(--luxury-red);
+    margin-bottom: 1rem;
+  }
+
+  .page-content__sidebar-text {
+    color: var(--muted-foreground);
+    line-height: 1.7;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Page content",
+  "settings": [
+    { "type": "html", "id": "content", "label": "Content override" },
+    { "type": "checkbox", "id": "show_sidebar", "label": "Show sidebar", "default": false },
+    { "type": "text", "id": "sidebar_title", "label": "Sidebar title" },
+    { "type": "textarea", "id": "sidebar_text", "label": "Sidebar text" }
+  ],
+  "presets": [{ "name": "Page content" }]
+}
+{% endschema %}

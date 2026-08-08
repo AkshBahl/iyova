@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "banner": {
+      "type": "page-banner",
+      "settings": {}
+    },
+    "content": {
+      "type": "page-content",
+      "settings": {}
+    }
+  },
+  "order": ["banner", "content"]
+}

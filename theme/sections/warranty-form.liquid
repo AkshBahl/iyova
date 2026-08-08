@@ -1,0 +1,137 @@
+<section class="warranty-page full-width">
+  <div class="warranty-page__inner container-editorial">
+    <div class="warranty-page__intro">
+      <p class="text-eyebrow warranty-page__eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2 class="font-display warranty-page__title">{{ section.settings.title }}</h2>
+      <p class="warranty-page__text">{{ section.settings.text }}</p>
+    </div>
+
+    <div class="warranty-page__form-wrap">
+      {% form 'contact' %}
+        <input type="hidden" name="contact[tags]" value="warranty">
+
+        {% if form.posted_successfully? %}
+          <p class="warranty-page__success">{{ 'sections.warranty.success' | t }}</p>
+        {% endif %}
+
+        <div class="warranty-page__grid">
+          <div class="warranty-page__field">
+            <label for="WarrantyName">{{ 'sections.warranty.name' | t }}</label>
+            <input id="WarrantyName" type="text" name="contact[name]" required>
+          </div>
+          <div class="warranty-page__field">
+            <label for="WarrantyEmail">{{ 'sections.warranty.email' | t }}</label>
+            <input id="WarrantyEmail" type="email" name="contact[email]" required>
+          </div>
+          <div class="warranty-page__field">
+            <label for="WarrantyProduct">{{ 'sections.warranty.product' | t }}</label>
+            <input id="WarrantyProduct" type="text" name="contact[product]" required>
+          </div>
+          <div class="warranty-page__field">
+            <label for="WarrantyOrder">{{ 'sections.warranty.order' | t }}</label>
+            <input id="WarrantyOrder" type="text" name="contact[order_number]">
+          </div>
+          <div class="warranty-page__field warranty-page__field--full">
+            <label for="WarrantyMessage">{{ 'sections.warranty.message' | t }}</label>
+            <textarea id="WarrantyMessage" name="contact[body]" rows="5"></textarea>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-red">{{ 'sections.warranty.submit' | t }}</button>
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .warranty-page {
+    padding-bottom: 6rem;
+  }
+
+  .warranty-page__intro {
+    max-width: 40rem;
+    margin-bottom: 3rem;
+  }
+
+  .warranty-page__eyebrow {
+    color: var(--luxury-red);
+  }
+
+  .warranty-page__title {
+    margin-top: 1rem;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.05;
+  }
+
+  .warranty-page__text {
+    margin-top: 1.25rem;
+    color: var(--muted-foreground);
+    line-height: 1.7;
+  }
+
+  .warranty-page__form-wrap {
+    background: var(--cream);
+    padding: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .warranty-page__form-wrap {
+      padding: 2.5rem;
+    }
+  }
+
+  .warranty-page__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .warranty-page__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .warranty-page__field {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .warranty-page__field--full {
+    grid-column: 1 / -1;
+  }
+
+  .warranty-page__field label {
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+  }
+
+  .warranty-page__field input,
+  .warranty-page__field textarea {
+    width: 100%;
+    border: 1px solid rgba(45, 35, 35, 0.15);
+    background: var(--ivory);
+    padding: 0.875rem 1rem;
+    color: var(--text-dark);
+  }
+
+  .warranty-page__success {
+    margin-bottom: 1rem;
+    color: var(--luxury-red);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Warranty form",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Customer Care" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Register your IYOVA device." },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Register your product to activate warranty coverage and receive dedicated support for your ritual." }
+  ],
+  "presets": [{ "name": "Warranty form" }]
+}
+{% endschema %}

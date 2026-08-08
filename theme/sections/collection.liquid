@@ -1,0 +1,104 @@
+<section class="shop-collection full-width">
+  <div class="shop-collection__inner container-editorial">
+    <div class="shop-collection__header">
+      <p class="text-eyebrow shop-collection__eyebrow">{{ section.settings.eyebrow }}</p>
+      <h1 class="font-display shop-collection__title">{{ collection.title }}</h1>
+      {% if collection.description != blank %}
+        <div class="shop-collection__description rte">{{ collection.description }}</div>
+      {% endif %}
+    </div>
+
+    {% paginate collection.products by section.settings.products_per_page %}
+      <div class="shop-collection__grid">
+        {% for product in collection.products %}
+          {% render 'product-card', product: product %}
+        {% else %}
+          <p class="shop-collection__empty">{{ 'sections.shop.empty' | t }}</p>
+        {% endfor %}
+      </div>
+
+      {% if paginate.pages > 1 %}
+        <div class="shop-collection__pagination">
+          {{ paginate | default_pagination }}
+        </div>
+      {% endif %}
+    {% endpaginate %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .shop-collection {
+    padding-top: calc(var(--header-height) + 3rem);
+    padding-bottom: 6rem;
+  }
+
+  @media (min-width: 768px) {
+    .shop-collection {
+      padding-bottom: 9rem;
+    }
+  }
+
+  .shop-collection__header {
+    margin-bottom: 3.5rem;
+    max-width: 40rem;
+  }
+
+  .shop-collection__eyebrow {
+    color: var(--luxury-red);
+  }
+
+  .shop-collection__title {
+    margin-top: 1rem;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 0.98;
+  }
+
+  .shop-collection__description {
+    margin-top: 1rem;
+    color: var(--muted-foreground);
+    line-height: 1.7;
+  }
+
+  .shop-collection__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem 2rem;
+    row-gap: 4rem;
+  }
+
+  @media (min-width: 1024px) {
+    .shop-collection__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 2.5rem;
+      row-gap: 4rem;
+    }
+  }
+
+  .shop-collection__empty {
+    grid-column: 1 / -1;
+    color: var(--muted-foreground);
+  }
+
+  .shop-collection__pagination {
+    margin-top: 4rem;
+    text-align: center;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Shop" },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 6,
+      "max": 24,
+      "step": 3,
+      "default": 6
+    }
+  ]
+}
+{% endschema %}

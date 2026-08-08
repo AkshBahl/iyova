@@ -1,0 +1,33 @@
+{% doc %}
+  Default IYOVA footer link columns.
+{% enddoc %}
+
+<div class="site-footer__col">
+  <p class="site-footer__col-title">Shop</p>
+  <ul class="site-footer__list">
+    <li><a class="site-footer__link" href="{{ routes.all_products_collection_url }}">Shop All</a></li>
+    <li><a class="site-footer__link" href="{{ routes.collections_url }}">Collections</a></li>
+    <li><a class="site-footer__link" href="{{ pages['about-us'].url | default: '/pages/about-us' }}">About Us</a></li>
+    <li><a class="site-footer__link" href="{{ blogs['journal'].url | default: routes.blogs_url }}">Journal</a></li>
+  </ul>
+</div>
+
+<div class="site-footer__col">
+  <p class="site-footer__col-title">Customer Care</p>
+  <ul class="site-footer__list">
+    <li><a class="site-footer__link" href="{{ pages['warranty-registration'].url | default: '/pages/warranty-registration' }}">Warranty Registration</a></li>
+    <li><a class="site-footer__link" href="{{ pages['shipping'].url | default: '/pages/shipping' }}">Shipping</a></li>
+    <li><a class="site-footer__link" href="{{ pages['returns'].url | default: '/pages/returns' }}">Returns</a></li>
+    <li><a class="site-footer__link" href="{{ pages['faqs'].url | default: '/pages/faqs' }}">FAQs</a></li>
+    <li><a class="site-footer__link" href="{{ pages['track-order'].url | default: '/pages/track-order' }}">Track Order</a></li>
+  </ul>
+</div>
+
+<div class="site-footer__col">
+  <p class="site-footer__col-title">Legal</p>
+  <ul class="site-footer__list">
+    <li><a class="site-footer__link" href="{{ pages['privacy-policy'].url | default: '/pages/privacy-policy' }}">Privacy Policy</a></li>
+    <li><a class="site-footer__link" href="{{ pages['terms-and-conditions'].url | default: '/pages/terms-and-conditions' }}">Terms & Conditions</a></li>
+    <li><a class="site-footer__link" href="{{ pages['contact-us'].url | default: '/pages/contact-us' }}">Contact Us</a></li>
+  </ul>
+</div>

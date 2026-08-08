@@ -1,0 +1,64 @@
+<section class="not-found full-width">
+  <div class="not-found__inner container-editorial">
+    <p class="text-eyebrow not-found__eyebrow">{{ section.settings.eyebrow }}</p>
+    <h1 class="font-display not-found__title">{{ section.settings.title }}</h1>
+    <p class="not-found__text">{{ section.settings.text }}</p>
+    <div class="not-found__actions">
+      <a href="{{ routes.root_url }}" class="btn-red">{{ section.settings.primary_cta }}</a>
+      <a href="{{ routes.all_products_collection_url }}" class="btn-ghost">{{ section.settings.secondary_cta }}</a>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .not-found {
+    min-height: 70vh;
+    display: grid;
+    place-items: center;
+    padding-top: calc(var(--header-height) + 4rem);
+    padding-bottom: 6rem;
+    text-align: center;
+  }
+
+  .not-found__inner {
+    max-width: 36rem;
+  }
+
+  .not-found__eyebrow {
+    color: var(--luxury-red);
+  }
+
+  .not-found__title {
+    margin-top: 1rem;
+    font-size: clamp(3rem, 8vw, 6rem);
+    line-height: 0.95;
+  }
+
+  .not-found__text {
+    margin-top: 1.5rem;
+    color: var(--muted-foreground);
+    line-height: 1.7;
+    font-size: 1.05rem;
+  }
+
+  .not-found__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.404",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "404" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Page not found" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "The page you're looking for may have moved or no longer exists. Let's get you back to your ritual." },
+    { "type": "text", "id": "primary_cta", "label": "Primary CTA", "default": "Back to Home" },
+    { "type": "text", "id": "secondary_cta", "label": "Secondary CTA", "default": "Shop All" }
+  ]
+}
+{% endschema %}

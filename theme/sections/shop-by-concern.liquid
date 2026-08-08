@@ -1,0 +1,102 @@
+<section class="concerns full-width">
+  <div class="concerns__inner container-editorial">
+    {% capture concerns_title %}
+      Find what your <em>beauty</em> needs.
+    {% endcapture %}
+    {% render 'section-head', eyebrow: section.settings.eyebrow, title: concerns_title %}
+
+    <div class="concerns__list no-scrollbar">
+      {% for block in section.blocks %}
+        <a href="{{ block.settings.link | default: routes.all_products_collection_url }}" class="concerns__pill" {{ block.shopify_attributes }}>
+          {{ block.settings.label }}
+          <span aria-hidden="true">→</span>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .concerns {
+    background: var(--cream);
+    padding-block: 6rem;
+  }
+
+  @media (min-width: 768px) {
+    .concerns {
+      padding-block: 8rem;
+    }
+  }
+
+  .concerns__inner .section-head {
+    margin-bottom: 3.5rem;
+  }
+
+  .concerns__list {
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .concerns__list {
+      flex-wrap: wrap;
+      overflow: visible;
+      gap: 1rem;
+    }
+  }
+
+  .concerns__pill {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    border: 1px solid rgba(45, 35, 35, 0.25);
+    padding: 0.875rem 1.5rem;
+    font-size: 0.875rem;
+    color: var(--text-dark);
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+
+  .concerns__pill:hover {
+    background: var(--text-dark);
+    color: var(--ivory);
+    border-color: var(--text-dark);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Shop by concern",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Shop by Concern" }
+  ],
+  "blocks": [
+    {
+      "type": "concern",
+      "name": "Concern",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Anti-Aging" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop by concern",
+      "blocks": [
+        { "type": "concern", "settings": { "label": "Anti-Aging" } },
+        { "type": "concern", "settings": { "label": "Skin Radiance" } },
+        { "type": "concern", "settings": { "label": "Deep Cleansing" } },
+        { "type": "concern", "settings": { "label": "Hair Styling" } },
+        { "type": "concern", "settings": { "label": "Scalp Care" } },
+        { "type": "concern", "settings": { "label": "Hair Removal" } },
+        { "type": "concern", "settings": { "label": "Body Recovery" } },
+        { "type": "concern", "settings": { "label": "Everyday Wellness" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

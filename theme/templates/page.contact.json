@@ -1,0 +1,17 @@
+{
+  "sections": {
+    "banner": {
+      "type": "page-banner",
+      "settings": {
+        "eyebrow": "Contact",
+        "title": "Contact Us",
+        "subtitle": "Questions about products, orders, or your ritual — our team is here to help."
+      }
+    },
+    "form": {
+      "type": "contact-form",
+      "settings": {}
+    }
+  },
+  "order": ["banner", "form"]
+}

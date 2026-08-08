@@ -1,0 +1,22 @@
+{
+  "sections": {
+    "banner": {
+      "type": "page-banner",
+      "settings": {
+        "eyebrow": "Customer Care",
+        "title": "Track Order",
+        "subtitle": "Follow your IYOVA order from our warehouse to your door."
+      }
+    },
+    "content": {
+      "type": "page-content",
+      "settings": {
+        "content": "<p>Once your order has shipped, you'll receive an email with a tracking number and link to follow your delivery in real time.</p><h2>Can't find your tracking email?</h2><p>Check your spam folder, or log in to your account to view order status. If you checked out as a guest, use the link in your order confirmation email.</p><h2>Still need help?</h2><p>Contact our customer care team with your order number and we'll provide an update within one business day.</p>",
+        "show_sidebar": true,
+        "sidebar_title": "Order status",
+        "sidebar_text": "Processing: 1–2 business days. Shipped: tracking link sent by email. Delivered: enjoy your new ritual."
+      }
+    }
+  },
+  "order": ["banner", "content"]
+}

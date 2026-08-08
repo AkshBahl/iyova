@@ -1,0 +1,84 @@
+<article class="article-page full-width">
+  <div class="article-page__inner container-editorial">
+    {% if article.image %}
+      <div class="article-page__hero">
+        {{ article.image | image_url: width: 1400 | image_tag: alt: article.image.alt, class: 'article-page__hero-image', loading: 'eager' }}
+      </div>
+    {% endif %}
+
+    <header class="article-page__header">
+      <p class="text-eyebrow article-page__eyebrow">{{ article.tags.first | default: 'Journal' }}</p>
+      <h1 class="font-display article-page__title">{{ article.title }}</h1>
+      {% assign date = article.published_at | time_tag: format: 'date' %}
+      <p class="article-page__meta">{{ 'blog.article_metadata_html' | t: date: date, author: article.author }}</p>
+    </header>
+
+    <div class="article-page__content rte">{{ article.content }}</div>
+
+    <div class="article-page__back">
+      <a href="{{ blog.url }}" class="btn-ghost">← Back to Journal</a>
+    </div>
+  </div>
+</article>
+
+{% stylesheet %}
+  .article-page {
+    padding-top: calc(var(--header-height) + 2rem);
+    padding-bottom: 6rem;
+  }
+
+  .article-page__hero {
+    margin-bottom: 2.5rem;
+    overflow: hidden;
+    background: var(--cream);
+  }
+
+  .article-page__hero-image {
+    width: 100%;
+    max-height: 32rem;
+    object-fit: cover;
+  }
+
+  .article-page__eyebrow {
+    color: var(--luxury-red);
+  }
+
+  .article-page__title {
+    margin-top: 1rem;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 0.98;
+    max-width: 20ch;
+  }
+
+  .article-page__meta {
+    margin-top: 1rem;
+    color: var(--muted-foreground);
+    font-size: 0.9rem;
+  }
+
+  .article-page__content {
+    margin-top: 2.5rem;
+    max-width: 44rem;
+    color: var(--text-dark);
+    line-height: 1.85;
+    font-size: 1.05rem;
+  }
+
+  .article-page__content h2,
+  .article-page__content h3 {
+    font-family: var(--font-serif);
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .article-page__back {
+    margin-top: 4rem;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.article",
+  "settings": []
+}
+{% endschema %}

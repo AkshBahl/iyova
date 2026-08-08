@@ -1,0 +1,439 @@
+<section class="hero full-width" data-hero>
+  <h2 class="hero__watermark font-display" aria-hidden="true">IYOVA</h2>
+
+  <div class="hero__grid container-editorial">
+    <div class="hero__content">
+      <p class="text-eyebrow hero__eyebrow animate-fade-up" style="animation-delay: 0.5s;">
+        <span class="hero__eyebrow-line"></span>
+        {{ section.settings.eyebrow }}
+      </p>
+
+      <h1 class="font-display hero__title animate-fade-up" style="animation-delay: 0.7s;">
+        {{ section.settings.heading_line_1 }}<br>
+        {{ section.settings.heading_line_2 }}<br>
+        <em>{{ section.settings.heading_emphasis }}</em>
+      </h1>
+
+      <p class="hero__description animate-fade-up" style="animation-delay: 1s;">
+        {{ section.settings.description }}
+      </p>
+
+      <div class="hero__actions animate-fade-up" style="animation-delay: 1.25s;">
+        {% if section.settings.primary_button_label != blank %}
+          <a href="{{ section.settings.primary_button_link | default: routes.all_products_collection_url }}" class="btn-red">
+            {{ section.settings.primary_button_label }}
+          </a>
+        {% endif %}
+        {% if section.settings.secondary_button_label != blank %}
+          <a href="{{ section.settings.secondary_button_link }}" class="btn-ghost">
+            {{ section.settings.secondary_button_label }}
+          </a>
+        {% endif %}
+      </div>
+
+      <div class="hero__proof animate-fade-up" style="animation-delay: 1.5s;">
+        <div class="hero__avatars">
+          {% if section.settings.avatar_1 != blank %}
+            {{ section.settings.avatar_1 | image_url: width: 72 | image_tag: class: 'hero__avatar', alt: '' }}
+          {% else %}
+            <img src="{{ 'cat-hair.jpg' | asset_url }}" alt="" class="hero__avatar" width="36" height="36">
+          {% endif %}
+          {% if section.settings.avatar_2 != blank %}
+            {{ section.settings.avatar_2 | image_url: width: 72 | image_tag: class: 'hero__avatar', alt: '' }}
+          {% else %}
+            <img src="{{ 'cat-face.jpg' | asset_url }}" alt="" class="hero__avatar" width="36" height="36">
+          {% endif %}
+          {% if section.settings.avatar_3 != blank %}
+            {{ section.settings.avatar_3 | image_url: width: 72 | image_tag: class: 'hero__avatar', alt: '' }}
+          {% else %}
+            <img src="{{ 'cat-body.jpg' | asset_url }}" alt="" class="hero__avatar" width="36" height="36">
+          {% endif %}
+        </div>
+        <div>
+          <div class="hero__stars" aria-hidden="true">★★★★★</div>
+          <p class="hero__reviews">{{ section.settings.social_proof }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero__visual">
+      <div class="hero__product animate-fade-in" style="animation-delay: 0.5s;" data-hero-product>
+        {% if section.settings.image != blank %}
+          {{ section.settings.image | image_url: width: 1200 | image_tag: alt: section.settings.image.alt, class: 'hero__product-image' }}
+        {% else %}
+          <img
+            src="{{ 'hero-product.jpg' | asset_url }}"
+            alt="IYOVA LED facial therapy device"
+            class="hero__product-image"
+            width="620"
+            height="744"
+            loading="eager"
+          >
+        {% endif %}
+      </div>
+
+      <div class="hero__card hero__card--one">{{ section.settings.card_1 }}</div>
+      <div class="hero__card hero__card--two">{{ section.settings.card_2 }}</div>
+      <div class="hero__card hero__card--three">{{ section.settings.card_3 }}</div>
+    </div>
+  </div>
+
+  <div class="hero__scroll text-eyebrow">
+    {{ section.settings.scroll_label }}
+    <span class="hero__scroll-line"></span>
+  </div>
+</section>
+
+{% stylesheet %}
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding-top: var(--header-height);
+  }
+
+  .hero__watermark {
+    pointer-events: none;
+    position: absolute;
+    inset-inline: 0;
+    top: 46%;
+    transform: translateY(-50%);
+    text-align: center;
+    font-size: clamp(4rem, 38vw, 16rem);
+    line-height: 0.8;
+    color: rgba(45, 35, 35, 0.07);
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  @media (min-width: 768px) {
+    .hero__watermark {
+      top: 38%;
+      font-size: clamp(6rem, 26vw, 14rem);
+    }
+  }
+
+  .hero__grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    width: 100%;
+    padding-block: 3rem;
+  }
+
+  @media (min-width: 1024px) {
+    .hero__grid {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      padding-block: 0;
+    }
+  }
+
+  .hero__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  @media (min-width: 1024px) {
+    .hero__content {
+      grid-column: span 5;
+    }
+  }
+
+  .hero__eyebrow {
+    color: var(--luxury-red);
+    display: flex;
+    align-items: center;
+  }
+
+  .hero__eyebrow-line {
+    display: inline-block;
+    width: 2rem;
+    height: 1px;
+    background: var(--luxury-red);
+    margin-right: 0.75rem;
+  }
+
+  .hero__title {
+    margin-top: 1.5rem;
+    font-size: clamp(3rem, 7vw, 6.2rem);
+  }
+
+  .hero__title em {
+    font-style: italic;
+    color: var(--luxury-red);
+    font-weight: 300;
+  }
+
+  .hero__description {
+    margin-top: 2rem;
+    max-width: 28rem;
+    color: var(--muted-foreground);
+    font-size: 1.125rem;
+    line-height: 1.7;
+  }
+
+  .hero__actions {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .hero__proof {
+    margin-top: 3.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .hero__avatars {
+    display: flex;
+  }
+
+  .hero__avatar {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 999px;
+    border: 2px solid var(--ivory);
+    object-fit: cover;
+    margin-left: -0.5rem;
+    background: var(--cream);
+  }
+
+  .hero__avatar:first-child {
+    margin-left: 0;
+  }
+
+  .hero__stars {
+    color: var(--luxury-red);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+  }
+
+  .hero__reviews {
+    margin-top: 0.25rem;
+    font-size: 0.75rem;
+    color: var(--muted-foreground);
+  }
+
+  .hero__visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 440px;
+  }
+
+  @media (min-width: 1024px) {
+    .hero__visual {
+      grid-column: span 7;
+      min-height: 720px;
+    }
+  }
+
+  .hero__product {
+    position: relative;
+    width: 86%;
+    max-width: 620px;
+    aspect-ratio: 5 / 6;
+    transition: transform 0.5s ease-out;
+  }
+
+  .hero__product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero__card {
+    position: absolute;
+    display: none;
+    align-items: center;
+    gap: 0.625rem;
+    background: color-mix(in oklab, var(--ivory) 70%, transparent);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(216, 197, 191, 0.6);
+    box-shadow: 0 10px 40px -20px rgba(45, 35, 35, 0.25);
+    padding: 0.625rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  @media (min-width: 768px) {
+    .hero__card {
+      display: flex;
+    }
+  }
+
+  .hero__card--one {
+    top: 14%;
+    left: 2%;
+  }
+
+  .hero__card--two {
+    bottom: 22%;
+    right: 4%;
+  }
+
+  .hero__card--three {
+    top: 48%;
+    right: 0;
+  }
+
+  .hero__scroll {
+    position: absolute;
+    left: 50%;
+    bottom: 1.5rem;
+    transform: translateX(-50%);
+    color: var(--muted-foreground);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 10px;
+  }
+
+  .hero__scroll-line {
+    display: block;
+    width: 1px;
+    height: 2rem;
+    background: rgba(45, 35, 35, 0.4);
+    animation: scroll-line 1.8s ease-in-out infinite;
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  const hero = document.querySelector('[data-hero]');
+  const product = document.querySelector('[data-hero-product]');
+
+  if (hero && product && window.matchMedia('(hover: hover)').matches) {
+    hero.addEventListener('mousemove', (event) => {
+      const rect = hero.getBoundingClientRect();
+      const x = ((event.clientX - rect.left) / rect.width - 0.5) * 14;
+      const y = ((event.clientY - rect.top) / rect.height - 0.5) * 14;
+      product.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+    });
+
+    hero.addEventListener('mouseleave', () => {
+      product.style.transform = 'translate3d(0, 0, 0)';
+    });
+  }
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "IYOVA SKIN"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_1",
+      "label": "Heading line 1",
+      "default": "The New"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_2",
+      "label": "Heading line 2",
+      "default": "Ritual of"
+    },
+    {
+      "type": "text",
+      "id": "heading_emphasis",
+      "label": "Heading emphasis",
+      "default": "Beauty."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Thoughtfully designed beauty technology, created to elevate your everyday rituals."
+    },
+    {
+      "type": "text",
+      "id": "primary_button_label",
+      "label": "Primary button label",
+      "default": "Shop the collection"
+    },
+    {
+      "type": "url",
+      "id": "primary_button_link",
+      "label": "Primary button link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_button_label",
+      "label": "Secondary button label",
+      "default": "Discover IYOVA"
+    },
+    {
+      "type": "url",
+      "id": "secondary_button_link",
+      "label": "Secondary button link"
+    },
+    {
+      "type": "text",
+      "id": "social_proof",
+      "label": "Social proof",
+      "default": "Loved by our community · 12,400+ reviews"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero image"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar_1",
+      "label": "Avatar 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar_2",
+      "label": "Avatar 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar_3",
+      "label": "Avatar 3"
+    },
+    {
+      "type": "text",
+      "id": "card_1",
+      "label": "Floating card 1",
+      "default": "Smart Technology"
+    },
+    {
+      "type": "text",
+      "id": "card_2",
+      "label": "Floating card 2",
+      "default": "Designed for You"
+    },
+    {
+      "type": "text",
+      "id": "card_3",
+      "label": "Floating card 3",
+      "default": "Beauty Innovation"
+    },
+    {
+      "type": "text",
+      "id": "scroll_label",
+      "label": "Scroll label",
+      "default": "Scroll to discover"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero"
+    }
+  ]
+}
+{% endschema %}

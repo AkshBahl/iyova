@@ -1,0 +1,188 @@
+<section class="newsletter full-width">
+  <div class="newsletter__watermark font-display" aria-hidden="true">IYOVA</div>
+
+  <div class="newsletter__inner container-editorial">
+    <div class="newsletter__grid">
+      <div>
+        <p class="text-eyebrow newsletter__eyebrow">{{ section.settings.eyebrow }}</p>
+        <h2 class="font-display newsletter__title">
+          {{ section.settings.title_line_1 }}<br>
+          <em>{{ section.settings.title_emphasis }}</em>
+        </h2>
+      </div>
+
+      <div>
+        <p class="newsletter__text">{{ section.settings.text }}</p>
+
+        {% form 'customer', class: 'newsletter__form' %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+
+          <div class="newsletter__fields">
+            <input
+              type="email"
+              name="contact[email]"
+              required
+              placeholder="{{ section.settings.placeholder }}"
+              class="newsletter__input"
+              autocomplete="email"
+            >
+            <button type="submit" class="newsletter__submit">
+              {{ section.settings.button_label }} →
+            </button>
+          </div>
+
+          {% if form.posted_successfully? %}
+            <p class="newsletter__message">{{ 'sections.newsletter.success' | t }}</p>
+          {% endif %}
+
+          {% if form.errors %}
+            <p class="newsletter__message newsletter__message--error">{{ form.errors.messages.email }}</p>
+          {% endif %}
+        {% endform %}
+
+        <p class="newsletter__disclaimer">{{ section.settings.disclaimer }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .newsletter {
+    position: relative;
+    overflow: hidden;
+    background: var(--luxury-red);
+    color: var(--ivory);
+    padding-block: 6rem;
+  }
+
+  @media (min-width: 768px) {
+    .newsletter {
+      padding-block: 8rem;
+    }
+  }
+
+  .newsletter__watermark {
+    pointer-events: none;
+    position: absolute;
+    inset-inline: 0;
+    bottom: -5rem;
+    text-align: center;
+    font-size: clamp(8rem, 26vw, 18rem);
+    line-height: 1;
+    color: rgba(245, 241, 232, 0.06);
+  }
+
+  .newsletter__inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .newsletter__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    .newsletter__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .newsletter__eyebrow {
+    color: var(--rose-beige);
+  }
+
+  .newsletter__title {
+    margin-top: 1.25rem;
+    font-size: clamp(2.4rem, 5vw, 4.5rem);
+    line-height: 1;
+  }
+
+  .newsletter__title em {
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  .newsletter__text {
+    max-width: 28rem;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: rgba(245, 241, 232, 0.85);
+  }
+
+  .newsletter__form {
+    margin-top: 2rem;
+  }
+
+  .newsletter__fields {
+    display: flex;
+    align-items: end;
+    gap: 1rem;
+    border-bottom: 1px solid rgba(245, 241, 232, 0.4);
+    padding-bottom: 0.75rem;
+    max-width: 28rem;
+  }
+
+  .newsletter__input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--ivory);
+    padding-block: 0.5rem;
+  }
+
+  .newsletter__input::placeholder {
+    color: rgba(245, 241, 232, 0.6);
+  }
+
+  .newsletter__submit {
+    background: none;
+    border: none;
+    color: var(--ivory);
+    font-size: 0.72rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .newsletter__submit:hover {
+    opacity: 0.8;
+  }
+
+  .newsletter__message {
+    margin-top: 1rem;
+    font-size: 0.875rem;
+  }
+
+  .newsletter__message--error {
+    color: #ffd9d9;
+  }
+
+  .newsletter__disclaimer {
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    color: rgba(245, 241, 232, 0.6);
+    max-width: 28rem;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Newsletter" },
+    { "type": "text", "id": "title_line_1", "label": "Title line 1", "default": "Enter the world" },
+    { "type": "text", "id": "title_emphasis", "label": "Title emphasis", "default": "of IYOVA." },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Discover new rituals, beauty innovations and exclusive releases." },
+    { "type": "text", "id": "placeholder", "label": "Email placeholder", "default": "Your email address" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Join IYOVA" },
+    { "type": "text", "id": "disclaimer", "label": "Disclaimer", "default": "By subscribing you agree to receive emails from IYOVA SKIN." }
+  ],
+  "presets": [{ "name": "Newsletter" }]
+}
+{% endschema %}

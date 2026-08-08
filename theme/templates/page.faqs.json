@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "banner": {
+      "type": "page-banner",
+      "settings": {
+        "eyebrow": "Support",
+        "title": "FAQs",
+        "subtitle": "Answers to common questions about IYOVA products, orders, and care."
+      }
+    },
+    "content": {
+      "type": "page-content",
+      "settings": {
+        "content": "<h2>Products & usage</h2><p><strong>How often should I use my IYOVA device?</strong><br>We recommend following the guided ritual in your product manual — typically 3–5 minutes per session, several times per week.</p><p><strong>Is IYOVA suitable for sensitive skin?</strong><br>Our devices are designed with multiple intensity settings. Start on the lowest setting and consult your dermatologist if you have specific concerns.</p><h2>Orders & shipping</h2><p><strong>When will my order ship?</strong><br>Orders are processed within 1–2 business days. You'll receive tracking information once your package is on its way.</p><p><strong>Can I change or cancel my order?</strong><br>Contact us as soon as possible — we'll do our best to accommodate changes before your order ships.</p><h2>Warranty & support</h2><p><strong>How do I register my warranty?</strong><br>Visit our Warranty Registration page with your product serial number and purchase details.</p>"
+      }
+    }
+  },
+  "order": ["banner", "content"]
+}

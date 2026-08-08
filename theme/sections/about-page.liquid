@@ -1,0 +1,248 @@
+<section class="about-page full-width">
+  <div class="about-page__hero container-editorial">
+    <p class="text-eyebrow about-page__eyebrow">{{ section.settings.eyebrow }}</p>
+    <h1 class="font-display about-page__title">
+      {{ section.settings.title_line_1 }}<br>
+      <em>{{ section.settings.title_emphasis }}</em>
+    </h1>
+    <p class="about-page__intro">{{ section.settings.intro }}</p>
+  </div>
+
+  <div class="about-page__statement">
+    <div class="about-page__statement-inner container-editorial">
+      <p class="text-eyebrow about-page__statement-eyebrow">{{ section.settings.statement_eyebrow }}</p>
+      <div class="about-page__lines">
+        <span class="font-display about-page__line">{{ section.settings.statement_line_1 }}</span>
+        <span class="font-display about-page__line">{{ section.settings.statement_line_2 }}</span>
+      </div>
+      <p class="about-page__statement-text">{{ section.settings.statement_text }}</p>
+    </div>
+  </div>
+
+  <div class="about-page__values container-editorial">
+    <div class="about-page__values-grid">
+      {% for block in section.blocks %}
+        <div class="about-page__value" {{ block.shopify_attributes }}>
+          <span class="about-page__value-index">0{{ forloop.index }}</span>
+          <h2 class="about-page__value-title">{{ block.settings.title }}</h2>
+          <p class="about-page__value-text">{{ block.settings.text }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  {% if section.settings.image != blank %}
+    <div class="about-page__image-wrap container-editorial">
+      {{ section.settings.image | image_url: width: 1600 | image_tag: alt: section.settings.image.alt, class: 'about-page__image' }}
+    </div>
+  {% else %}
+    <div class="about-page__image-wrap container-editorial">
+      <img src="{{ 'lifestyle-video.jpg' | asset_url }}" alt="IYOVA beauty ritual" class="about-page__image" loading="lazy">
+    </div>
+  {% endif %}
+
+  <div class="about-page__closing container-editorial">
+    <p class="about-page__closing-text">{{ section.settings.closing_text }}</p>
+    {% if section.settings.button_label != blank %}
+      <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="btn-red">
+        {{ section.settings.button_label }}
+      </a>
+    {% endif %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .about-page__hero {
+    padding-top: calc(var(--header-height) + 4rem);
+    padding-bottom: 4rem;
+    max-width: 48rem;
+  }
+
+  .about-page__eyebrow {
+    color: var(--luxury-red);
+  }
+
+  .about-page__title {
+    margin-top: 1rem;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    line-height: 0.98;
+  }
+
+  .about-page__title em {
+    font-style: italic;
+    color: var(--luxury-red);
+    font-weight: 300;
+  }
+
+  .about-page__intro {
+    margin-top: 1.5rem;
+    color: var(--muted-foreground);
+    font-size: 1.125rem;
+    line-height: 1.7;
+    max-width: 36rem;
+  }
+
+  .about-page__statement {
+    background: var(--cream);
+    padding-block: 6rem;
+  }
+
+  @media (min-width: 768px) {
+    .about-page__statement {
+      padding-block: 8rem;
+    }
+  }
+
+  .about-page__statement-inner {
+    text-align: center;
+  }
+
+  .about-page__statement-eyebrow {
+    color: var(--luxury-red);
+  }
+
+  .about-page__lines {
+    margin-top: 2rem;
+    max-width: 64rem;
+    margin-inline: auto;
+  }
+
+  .about-page__line {
+    display: block;
+    font-size: clamp(2rem, 5vw, 4rem);
+    line-height: 1.05;
+  }
+
+  .about-page__statement-text {
+    margin-top: 2rem;
+    max-width: 36rem;
+    margin-inline: auto;
+    color: var(--muted-foreground);
+    font-size: 1.125rem;
+    line-height: 1.7;
+  }
+
+  .about-page__values {
+    padding-block: 6rem;
+  }
+
+  .about-page__values-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .about-page__values-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 3rem;
+    }
+  }
+
+  .about-page__value {
+    border-top: 1px solid rgba(45, 35, 35, 0.15);
+    padding-top: 1.5rem;
+  }
+
+  .about-page__value-index {
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    color: var(--luxury-red);
+  }
+
+  .about-page__value-title {
+    margin-top: 1rem;
+    font-family: var(--font-serif);
+    font-size: 1.75rem;
+    line-height: 1.2;
+  }
+
+  .about-page__value-text {
+    margin-top: 0.75rem;
+    color: var(--muted-foreground);
+    line-height: 1.6;
+  }
+
+  .about-page__image-wrap {
+    padding-bottom: 6rem;
+  }
+
+  .about-page__image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  .about-page__closing {
+    padding-bottom: 6rem;
+    max-width: 40rem;
+  }
+
+  @media (min-width: 768px) {
+    .about-page__closing {
+      padding-bottom: 9rem;
+    }
+  }
+
+  .about-page__closing-text {
+    color: var(--muted-foreground);
+    font-size: 1.125rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "About page",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "About IYOVA" },
+    { "type": "text", "id": "title_line_1", "label": "Title line 1", "default": "Beauty, elevated" },
+    { "type": "text", "id": "title_emphasis", "label": "Title emphasis", "default": "by innovation." },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Introduction",
+      "default": "IYOVA SKIN creates thoughtfully designed beauty technology — premium devices engineered to elevate your everyday rituals with timeless design and quiet intelligence."
+    },
+    { "type": "text", "id": "statement_eyebrow", "label": "Statement eyebrow", "default": "The IYOVA Philosophy" },
+    { "type": "text", "id": "statement_line_1", "label": "Statement line 1", "default": "Where timeless beauty" },
+    { "type": "text", "id": "statement_line_2", "label": "Statement line 2", "default": "meets modern innovation." },
+    {
+      "type": "textarea",
+      "id": "statement_text",
+      "label": "Statement text",
+      "default": "At IYOVA, we believe beauty technology should feel as beautiful as the results it creates. Our thoughtfully selected innovations transform everyday self-care into elevated rituals."
+    },
+    { "type": "image_picker", "id": "image", "label": "Feature image" },
+    {
+      "type": "textarea",
+      "id": "closing_text",
+      "label": "Closing text",
+      "default": "Every IYOVA device is chosen for performance, materials, and the way it fits into a considered daily ritual — because beauty should feel intentional from the first moment you unbox it."
+    },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop Collection" },
+    { "type": "url", "id": "button_link", "label": "Button link" }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Thoughtful Innovation" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Technology developed with intention and purpose." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "About page",
+      "blocks": [
+        { "type": "value", "settings": { "title": "Thoughtful Innovation", "text": "Technology developed with intention and purpose." } },
+        { "type": "value", "settings": { "title": "Premium Quality", "text": "Refined materials, considered craftsmanship." } },
+        { "type": "value", "settings": { "title": "Designed for Every Ritual", "text": "Built to move with the rhythm of your day." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

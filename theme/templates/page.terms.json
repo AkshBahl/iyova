@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "banner": {
+      "type": "page-banner",
+      "settings": {
+        "eyebrow": "Legal",
+        "title": "Terms & Conditions",
+        "subtitle": "The terms governing your use of the IYOVA website and services."
+      }
+    },
+    "content": {
+      "type": "page-content",
+      "settings": {
+        "content": "<p>By accessing and using the IYOVA website, you agree to these terms and conditions. Please read them carefully before placing an order.</p><h2>Products & pricing</h2><p>All products are subject to availability. We reserve the right to modify prices and product descriptions at any time without prior notice.</p><h2>Orders & payment</h2><p>Placing an order constitutes an offer to purchase. We may decline orders at our discretion. Payment is processed securely at checkout.</p><h2>Limitation of liability</h2><p>IYOVA is not liable for indirect or consequential damages arising from the use of our products or website, to the fullest extent permitted by law.</p>"
+      }
+    }
+  },
+  "order": ["banner", "content"]
+}

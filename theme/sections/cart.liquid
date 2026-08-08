@@ -1,0 +1,191 @@
+<section class="cart-page full-width">
+  <div class="cart-page__inner container-editorial">
+    <div class="cart-page__header">
+      <p class="text-eyebrow cart-page__eyebrow">{{ section.settings.eyebrow }}</p>
+      <h1 class="font-display cart-page__title">{{ 'cart.title' | t }}</h1>
+    </div>
+
+    {% if cart.item_count == 0 %}
+      <div class="cart-page__empty">
+        <p>{{ section.settings.empty_text }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn-red">{{ section.settings.empty_cta }}</a>
+      </div>
+    {% else %}
+      <form action="{{ routes.cart_url }}" method="post" class="cart-page__form">
+        <div class="cart-page__items">
+          {% for item in cart.items %}
+            <div class="cart-page__item">
+              <a href="{{ item.url }}" class="cart-page__item-image">
+                {% if item.image %}
+                  {{ item.image | image_url: width: 240 | image_tag: alt: item.product.title, loading: 'lazy' }}
+                {% endif %}
+              </a>
+              <div class="cart-page__item-details">
+                <a href="{{ item.url }}" class="cart-page__item-title">{{ item.product.title }}</a>
+                {% unless item.variant.title == 'Default Title' %}
+                  <p class="cart-page__item-variant">{{ item.variant.title }}</p>
+                {% endunless %}
+                <p class="cart-page__item-price">{{ item.final_line_price | money }}</p>
+                <a href="{{ item.url_to_remove }}" class="cart-page__item-remove">{{ 'cart.remove' | t }}</a>
+              </div>
+              <div class="cart-page__item-qty">
+                <label class="visually-hidden" for="qty-{{ item.key }}">Quantity</label>
+                <input id="qty-{{ item.key }}" type="number" name="updates[]" value="{{ item.quantity }}" min="0" class="cart-page__qty-input">
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+        <div class="cart-page__summary">
+          <div class="cart-page__summary-row">
+            <span>Subtotal</span>
+            <span>{{ cart.total_price | money_with_currency }}</span>
+          </div>
+          <p class="cart-page__note">{{ section.settings.shipping_note }}</p>
+          <div class="cart-page__actions">
+            <button type="submit" name="update" class="btn-ghost">{{ 'cart.update' | t }}</button>
+            <button type="submit" name="checkout" class="btn-red">{{ 'cart.checkout' | t }}</button>
+          </div>
+        </div>
+      </form>
+    {% endif %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .cart-page {
+    padding-top: calc(var(--header-height) + 3rem);
+    padding-bottom: 6rem;
+  }
+
+  .cart-page__eyebrow {
+    color: var(--luxury-red);
+  }
+
+  .cart-page__title {
+    margin-top: 1rem;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 0.98;
+  }
+
+  .cart-page__empty {
+    margin-top: 3rem;
+    max-width: 28rem;
+    color: var(--muted-foreground);
+    line-height: 1.7;
+  }
+
+  .cart-page__empty .btn-red {
+    margin-top: 2rem;
+  }
+
+  .cart-page__form {
+    margin-top: 3rem;
+    display: grid;
+    gap: 3rem;
+  }
+
+  @media (min-width: 1024px) {
+    .cart-page__form {
+      grid-template-columns: 1fr 22rem;
+      align-items: start;
+    }
+  }
+
+  .cart-page__items {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .cart-page__item {
+    display: grid;
+    grid-template-columns: 6rem 1fr auto;
+    gap: 1.25rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(45, 35, 35, 0.08);
+  }
+
+  .cart-page__item-image img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    background: var(--cream);
+  }
+
+  .cart-page__item-title {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    color: var(--text-dark);
+    text-decoration: none;
+  }
+
+  .cart-page__item-variant,
+  .cart-page__item-price {
+    margin-top: 0.35rem;
+    font-size: 0.9rem;
+    color: var(--muted-foreground);
+  }
+
+  .cart-page__item-remove {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--luxury-red);
+    text-decoration: none;
+  }
+
+  .cart-page__qty-input {
+    width: 4rem;
+    padding: 0.65rem;
+    border: 1px solid rgba(45, 35, 35, 0.15);
+    background: transparent;
+    text-align: center;
+  }
+
+  .cart-page__summary {
+    padding: 2rem;
+    background: var(--cream);
+  }
+
+  .cart-page__summary-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1rem;
+    font-family: var(--font-serif);
+  }
+
+  .cart-page__note {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--muted-foreground);
+    line-height: 1.6;
+  }
+
+  .cart-page__actions {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .cart-page__actions .btn-red,
+  .cart-page__actions .btn-ghost {
+    width: 100%;
+    justify-content: center;
+    border: none;
+    font-family: inherit;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.cart",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Your Bag" },
+    { "type": "text", "id": "empty_text", "label": "Empty cart text", "default": "Your bag is empty. Discover the IYOVA collection and elevate your ritual." },
+    { "type": "text", "id": "empty_cta", "label": "Empty cart CTA", "default": "Shop All" },
+    { "type": "text", "id": "shipping_note", "label": "Shipping note", "default": "Shipping and taxes calculated at checkout." }
+  ]
+}
+{% endschema %}

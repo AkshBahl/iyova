@@ -1,0 +1,57 @@
+{% doc %}
+  IYOVA mega menu for Shop navigation.
+{% enddoc %}
+
+<div class="site-header__mega">
+  <div class="site-header__mega-grid container-editorial">
+    <div class="site-header__mega-intro">
+      <p class="text-eyebrow site-header__mega-eyebrow">{{ mega_eyebrow }}</p>
+      <h3 class="font-display site-header__mega-title">{{ mega_title }}</h3>
+      <div class="site-header__mega-links">
+        <a href="{{ routes.all_products_collection_url }}">{{ 'sections.header.shop_all' | t }}</a>
+        <a href="{{ routes.collections_url }}">{{ 'sections.header.collections' | t }}</a>
+      </div>
+    </div>
+
+    <div class="site-header__mega-col">
+      <p class="text-eyebrow site-header__mega-col-title">Face & Skin</p>
+      <ul class="site-header__mega-list">
+        <li><a href="{{ routes.all_products_collection_url }}">Facial Care</a></li>
+        <li><a href="{{ routes.all_products_collection_url }}">Cleansing Devices</a></li>
+        <li><a href="{{ routes.all_products_collection_url }}">LED / Light Therapy</a></li>
+        <li><a href="{{ routes.all_products_collection_url }}">Anti-Aging Devices</a></li>
+        <li><a href="{{ routes.all_products_collection_url }}">Facial Massagers</a></li>
+      </ul>
+    </div>
+
+    <div class="site-header__mega-col">
+      <p class="text-eyebrow site-header__mega-col-title">Hair Care</p>
+      <ul class="site-header__mega-list">
+        <li><a href="{{ routes.all_products_collection_url }}">Hair Dryers</a></li>
+        <li><a href="{{ routes.all_products_collection_url }}">Hair Stylers</a></li>
+        <li><a href="{{ routes.all_products_collection_url }}">Straighteners</a></li>
+        <li><a href="{{ routes.all_products_collection_url }}">Hair Brushes</a></li>
+        <li><a href="{{ routes.all_products_collection_url }}">Scalp Care</a></li>
+      </ul>
+    </div>
+
+    <div class="site-header__mega-col">
+      <p class="text-eyebrow site-header__mega-col-title">Body & Wellness</p>
+      <ul class="site-header__mega-list">
+        <li><a href="{{ routes.all_products_collection_url }}">Body Care</a></li>
+        <li><a href="{{ routes.all_products_collection_url }}">Hair Removal</a></li>
+        <li><a href="{{ routes.all_products_collection_url }}">Massagers</a></li>
+        <li><a href="{{ routes.all_products_collection_url }}">Recovery & Wellness</a></li>
+      </ul>
+    </div>
+
+    <div class="site-header__mega-col">
+      <p class="text-eyebrow site-header__mega-col-title">Personal Care</p>
+      <ul class="site-header__mega-list">
+        <li><a href="{{ routes.all_products_collection_url }}">Grooming</a></li>
+        <li><a href="{{ routes.all_products_collection_url }}">Oral Care</a></li>
+        <li><a href="{{ routes.all_products_collection_url }}">Everyday Beauty</a></li>
+      </ul>
+    </div>
+  </div>
+</div>

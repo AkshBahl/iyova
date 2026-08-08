@@ -1,0 +1,251 @@
+<footer class="site-footer full-width">
+  <div class="site-footer__watermark font-display" aria-hidden="true">IYOVA</div>
+
+  <div class="site-footer__inner container-editorial">
+    <div class="site-footer__grid">
+      <div class="site-footer__brand">
+        <p class="font-display site-footer__tagline">{{ section.settings.tagline }}</p>
+      </div>
+
+      {% if section.settings.use_default_links or section.settings.menu == blank %}
+        {% render 'iyova-footer-links' %}
+        {% render 'footer-socials',
+          instagram_url: section.settings.instagram_url,
+          facebook_url: section.settings.facebook_url,
+          youtube_url: section.settings.youtube_url
+        %}
+      {% else %}
+        {% assign columns = section.settings.menu.links | slice: 0, 3 %}
+        {% for link in columns %}
+          <div class="site-footer__col">
+            <p class="site-footer__col-title">{{ link.title }}</p>
+            {% if link.links.size > 0 %}
+              <ul class="site-footer__list">
+                {% for child in link.links %}
+                  <li><a class="site-footer__link" href="{{ child.url }}">{{ child.title }}</a></li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <ul class="site-footer__list">
+                <li><a class="site-footer__link" href="{{ link.url }}">{{ link.title }}</a></li>
+              </ul>
+            {% endif %}
+          </div>
+        {% endfor %}
+        {% render 'footer-socials',
+          instagram_url: section.settings.instagram_url,
+          facebook_url: section.settings.facebook_url,
+          youtube_url: section.settings.youtube_url
+        %}
+      {% endif %}
+    </div>
+
+    <div class="site-footer__bottom">
+      <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ 'sections.footer.rights' | t }}</p>
+      {% if section.settings.show_payment_icons %}
+        <div class="site-footer__payments">
+          {% for type in shop.enabled_payment_types %}
+            {{ type | payment_type_svg_tag }}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</footer>
+
+{% stylesheet %}
+  .site-footer {
+    position: relative;
+    overflow: hidden;
+    background: var(--text-dark);
+    color: var(--ivory);
+    padding-top: 5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .site-footer__watermark {
+    pointer-events: none;
+    position: absolute;
+    inset-inline: 0;
+    bottom: -4rem;
+    text-align: center;
+    font-size: clamp(8rem, 28vw, 18rem);
+    line-height: 1;
+    color: rgba(245, 241, 232, 0.025);
+    user-select: none;
+  }
+
+  .site-footer__inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .site-footer__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .site-footer__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .site-footer__grid {
+      grid-template-columns: 2fr repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .site-footer__tagline {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    line-height: 1.1;
+    max-width: 18rem;
+    color: var(--ivory);
+    font-weight: 400;
+  }
+
+  .site-footer__col-title {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--ivory);
+    margin-bottom: 1.25rem;
+  }
+
+  .site-footer__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .site-footer__link {
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 400;
+    line-height: 1.45;
+    color: rgba(245, 241, 232, 0.92);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .site-footer__link:hover {
+    color: var(--ivory);
+  }
+
+  .site-footer__social-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .site-footer__social-link {
+    width: 2.75rem;
+    height: 2.75rem;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(245, 241, 232, 0.45);
+    color: var(--ivory);
+    text-decoration: none;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  }
+
+  .site-footer__social-link:hover {
+    background: var(--luxury-red);
+    border-color: var(--luxury-red);
+    color: var(--ivory);
+  }
+
+  .site-footer__social-link--disabled {
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  .site-footer__social-icon {
+    width: 1.15rem;
+    height: 1.15rem;
+    display: block;
+  }
+
+  .site-footer__bottom {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(245, 241, 232, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    font-size: 0.8125rem;
+    font-weight: 400;
+    color: rgba(245, 241, 232, 0.9);
+  }
+
+  @media (min-width: 768px) {
+    .site-footer__bottom {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .site-footer__payments {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    opacity: 1;
+    filter: brightness(1.15);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.footer",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Beauty, elevated by innovation."
+    },
+    {
+      "type": "checkbox",
+      "id": "use_default_links",
+      "label": "Use default IYOVA footer links",
+      "default": true
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "t:labels.menu"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "url",
+      "id": "facebook_url",
+      "label": "Facebook URL"
+    },
+    {
+      "type": "url",
+      "id": "youtube_url",
+      "label": "YouTube URL"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "t:labels.show_payment_icons",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

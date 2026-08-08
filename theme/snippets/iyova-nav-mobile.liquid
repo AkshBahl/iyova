@@ -1,0 +1,19 @@
+{% doc %}
+  Mobile navigation links for IYOVA.
+{% enddoc %}
+
+{% liquid
+  assign about_page = pages['about-us']
+  assign contact_page = pages['contact-us']
+  assign warranty_page = pages['warranty-registration']
+  assign journal_blog = blogs['journal']
+  if journal_blog == blank
+    assign journal_blog = blogs['news']
+  endif
+%}
+
+<a href="{{ routes.all_products_collection_url }}" class="site-header__mobile-link font-display">{{ 'sections.header.shop' | t }}</a>
+<a href="{{ about_page.url | default: '/pages/about-us' }}" class="site-header__mobile-link font-display">{{ 'sections.header.about' | t }}</a>
+<a href="{{ journal_blog.url | default: routes.blogs_url }}" class="site-header__mobile-link font-display">{{ 'sections.header.journal' | t }}</a>
+<a href="{{ warranty_page.url | default: '/pages/warranty-registration' }}" class="site-header__mobile-link font-display">{{ 'sections.header.warranty' | t }}</a>
+<a href="{{ contact_page.url | default: '/pages/contact-us' }}" class="site-header__mobile-link font-display">{{ 'sections.header.contact' | t }}</a>

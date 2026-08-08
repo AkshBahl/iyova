@@ -1,0 +1,49 @@
+{% doc %}
+  Renders the footer Socials column with Instagram, YouTube, and Facebook icons.
+
+  @param {string} [instagram_url] - Instagram profile URL
+  @param {string} [facebook_url] - Facebook profile URL
+  @param {string} [youtube_url] - YouTube channel URL
+{% enddoc %}
+
+<div class="site-footer__col site-footer__col--socials">
+  <p class="site-footer__col-title">Socials</p>
+
+  <ul class="site-footer__social-list">
+    <li>
+      {% if instagram_url != blank %}
+        <a href="{{ instagram_url }}" class="site-footer__social-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+          {% render 'icon-instagram' %}
+        </a>
+      {% else %}
+        <span class="site-footer__social-link site-footer__social-link--disabled" aria-hidden="true">
+          {% render 'icon-instagram' %}
+        </span>
+      {% endif %}
+    </li>
+
+    <li>
+      {% if youtube_url != blank %}
+        <a href="{{ youtube_url }}" class="site-footer__social-link" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+          {% render 'icon-youtube' %}
+        </a>
+      {% else %}
+        <span class="site-footer__social-link site-footer__social-link--disabled" aria-hidden="true">
+          {% render 'icon-youtube' %}
+        </span>
+      {% endif %}
+    </li>
+
+    <li>
+      {% if facebook_url != blank %}
+        <a href="{{ facebook_url }}" class="site-footer__social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+          {% render 'icon-facebook' %}
+        </a>
+      {% else %}
+        <span class="site-footer__social-link site-footer__social-link--disabled" aria-hidden="true">
+          {% render 'icon-facebook' %}
+        </span>
+      {% endif %}
+    </li>
+  </ul>
+</div>

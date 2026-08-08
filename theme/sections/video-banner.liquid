@@ -1,0 +1,409 @@
+<section class="video-showcase full-width">
+  <div class="video-showcase__inner container-editorial">
+    {% capture showcase_title %}
+      {{ section.settings.title_before }} <em>{{ section.settings.title_emphasis }}</em>{{ section.settings.title_after }}
+    {% endcapture %}
+    {% render 'section-head',
+      eyebrow: section.settings.eyebrow,
+      title: showcase_title,
+      align: 'center'
+    %}
+
+    {% if section.blocks.size > 0 %}
+      <div class="video-showcase__header">
+        <div class="video-showcase__nav">
+          <button type="button" class="video-showcase__nav-btn" data-video-carousel-prev aria-label="Previous video">
+            ←
+          </button>
+          <button type="button" class="video-showcase__nav-btn" data-video-carousel-next aria-label="Next video">
+            →
+          </button>
+        </div>
+      </div>
+
+      <video-carousel class="video-showcase__carousel">
+        <div class="video-showcase__track">
+          {% for block in section.blocks %}
+            {% assign linked_product = block.settings.product %}
+            <article
+              class="video-showcase__slide{% if forloop.first %} is-active{% endif %}"
+              data-video-slide
+              {{ block.shopify_attributes }}
+            >
+              <div class="video-showcase__media">
+                {% if block.settings.video != blank %}
+                  {{ block.settings.video
+                    | video_tag:
+                      image_size: '900x',
+                      autoplay: false,
+                      loop: false,
+                      muted: true,
+                      controls: false,
+                      playsinline: true,
+                      preload: 'metadata',
+                      class: 'video-showcase__video'
+                  }}
+                {% elsif block.settings.poster != blank %}
+                  {{ block.settings.poster
+                    | image_url: width: 900
+                    | image_tag: alt: block.settings.poster.alt, class: 'video-showcase__poster', loading: 'lazy'
+                  }}
+                {% else %}
+                  {{ 'lifestyle-video.jpg' | asset_url | image_tag: alt: '', class: 'video-showcase__poster', loading: 'lazy' }}
+                {% endif %}
+              </div>
+
+              {% if linked_product != blank %}
+                <a href="{{ linked_product.url }}" class="video-showcase__product">
+                  <span class="video-showcase__product-thumb">
+                    {% if linked_product.featured_image %}
+                      {{ linked_product.featured_image | image_url: width: 120 | image_tag: alt: linked_product.featured_image.alt, loading: 'lazy' }}
+                    {% else %}
+                      {{ 'product-1' | placeholder_svg_tag }}
+                    {% endif %}
+                  </span>
+                  <span class="video-showcase__product-copy">
+                    <span class="video-showcase__product-title">{{ linked_product.title }}</span>
+                    <span class="video-showcase__product-price">
+                      {% if linked_product.compare_at_price_max > linked_product.price %}
+                        <s>{{ linked_product.compare_at_price_max | money }}</s>
+                      {% endif %}
+                      {{ linked_product.price | money }}
+                    </span>
+                  </span>
+                  <span class="video-showcase__product-link" aria-hidden="true">→</span>
+                </a>
+              {% endif %}
+            </article>
+          {% endfor %}
+        </div>
+      </video-carousel>
+    {% endif %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .video-showcase {
+    padding-block: 6rem;
+    background: var(--cream);
+    overflow: hidden;
+  }
+
+  @media (min-width: 768px) {
+    .video-showcase {
+      padding-block: 9rem;
+    }
+  }
+
+  .video-showcase__inner .section-head {
+    margin-bottom: 2.5rem;
+  }
+
+  .video-showcase__header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1.5rem;
+  }
+
+  .video-showcase__nav {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .video-showcase__nav-btn {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 999px;
+    border: 1px solid rgba(45, 35, 35, 0.2);
+    background: transparent;
+    color: var(--text-dark);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+
+  .video-showcase__nav-btn:hover {
+    background: var(--text-dark);
+    border-color: var(--text-dark);
+    color: var(--ivory);
+  }
+
+  .video-showcase__carousel {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .video-showcase__track {
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+    padding-block: 1rem;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+
+  @media (min-width: 768px) {
+    .video-showcase__track {
+      gap: 1.25rem;
+    }
+  }
+
+  .video-showcase__slide {
+    flex: 0 0 auto;
+    width: min(42vw, 11rem);
+    opacity: 0.55;
+    filter: grayscale(1);
+    transform: scale(0.92);
+    transition:
+      width 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.6s ease,
+      filter 0.6s ease,
+      transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @media (min-width: 768px) {
+    .video-showcase__slide {
+      width: min(22vw, 13rem);
+    }
+  }
+
+  .video-showcase__slide.is-active {
+    width: min(56vw, 15rem);
+    opacity: 1;
+    filter: none;
+    transform: scale(1);
+  }
+
+  @media (min-width: 768px) {
+    .video-showcase__slide.is-active {
+      width: min(24vw, 17rem);
+    }
+  }
+
+  .video-showcase__media {
+    aspect-ratio: 9 / 16;
+    overflow: hidden;
+    border-radius: 0.75rem;
+    background: rgba(45, 35, 35, 0.08);
+  }
+
+  .video-showcase__video,
+  .video-showcase__poster {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .video-showcase__product {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+    padding: 0.65rem 0.75rem;
+    border-radius: 0.65rem;
+    background: var(--ivory);
+    border: 1px solid rgba(45, 35, 35, 0.08);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .video-showcase__product:hover {
+    border-color: rgba(45, 35, 35, 0.18);
+    box-shadow: 0 8px 24px rgba(45, 35, 35, 0.08);
+  }
+
+  .video-showcase__product-thumb {
+    flex: 0 0 auto;
+    width: 2.75rem;
+    height: 2.75rem;
+    overflow: hidden;
+    border-radius: 0.4rem;
+    background: var(--cream);
+  }
+
+  .video-showcase__product-thumb img,
+  .video-showcase__product-thumb svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .video-showcase__product-copy {
+    flex: 1;
+    min-width: 0;
+    display: grid;
+    gap: 0.15rem;
+  }
+
+  .video-showcase__product-title {
+    font-size: 0.72rem;
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .video-showcase__product-price {
+    font-size: 0.72rem;
+    color: var(--luxury-red);
+    font-weight: 500;
+  }
+
+  .video-showcase__product-price s {
+    margin-right: 0.35rem;
+    color: var(--muted-foreground);
+    font-weight: 400;
+  }
+
+  .video-showcase__product-link {
+    flex: 0 0 auto;
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  class VideoCarousel extends HTMLElement {
+    connectedCallback() {
+      this.section = this.closest('.video-showcase');
+      if (!this.section) return;
+
+      this.track = this.querySelector('.video-showcase__track');
+      this.slides = [...this.querySelectorAll('[data-video-slide]')];
+      if (this.slides.length === 0) return;
+
+      this.prevButton = this.section.querySelector('[data-video-carousel-prev]');
+      this.nextButton = this.section.querySelector('[data-video-carousel-next]');
+      this.currentIndex = 0;
+      this.autoAdvanceTimer = null;
+
+      this.prevButton?.addEventListener('click', () => this.goTo(this.currentIndex - 1));
+      this.nextButton?.addEventListener('click', () => this.goTo(this.currentIndex + 1));
+
+      this.slides.forEach((slide, index) => {
+        const video = slide.querySelector('video');
+        if (!video) return;
+
+        video.muted = true;
+        video.playsInline = true;
+
+        video.addEventListener('ended', () => {
+          if (index === this.currentIndex) {
+            this.goTo(this.currentIndex + 1);
+          }
+        });
+      });
+
+      window.addEventListener('resize', () => this.updatePosition(false));
+      this.updatePosition(false);
+      this.playCurrent();
+    }
+
+    goTo(index) {
+      if (this.slides.length === 0) return;
+
+      if (index >= this.slides.length) {
+        index = 0;
+      } else if (index < 0) {
+        index = this.slides.length - 1;
+      }
+
+      this.currentIndex = index;
+      this.updatePosition(true);
+      this.playCurrent();
+    }
+
+    updatePosition(animate) {
+      const activeSlide = this.slides[this.currentIndex];
+      if (!activeSlide || !this.track) return;
+
+      this.slides.forEach((slide, index) => {
+        slide.classList.toggle('is-active', index === this.currentIndex);
+      });
+
+      const carouselWidth = this.offsetWidth;
+      const slideLeft = activeSlide.offsetLeft;
+      const slideWidth = activeSlide.offsetWidth;
+      const offset = slideLeft - (carouselWidth - slideWidth) / 2;
+
+      this.track.style.transition = animate
+        ? 'transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)'
+        : 'none';
+      this.track.style.transform = `translateX(${-offset}px)`;
+    }
+
+    playCurrent() {
+      clearTimeout(this.autoAdvanceTimer);
+
+      this.slides.forEach((slide, index) => {
+        const video = slide.querySelector('video');
+        if (!video) return;
+
+        if (index === this.currentIndex) {
+          video.currentTime = 0;
+          const playPromise = video.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(() => {});
+          }
+        } else {
+          video.pause();
+          video.currentTime = 0;
+        }
+      });
+
+      const activeSlide = this.slides[this.currentIndex];
+      const activeVideo = activeSlide?.querySelector('video');
+      if (activeSlide && !activeVideo) {
+        this.autoAdvanceTimer = setTimeout(() => {
+          this.goTo(this.currentIndex + 1);
+        }, 5000);
+      }
+    }
+
+    disconnectedCallback() {
+      clearTimeout(this.autoAdvanceTimer);
+    }
+  }
+
+  customElements.define('video-carousel', VideoCarousel);
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Video showcase",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Community" },
+    { "type": "text", "id": "title_before", "label": "Title before emphasis", "default": "Real people," },
+    { "type": "text", "id": "title_emphasis", "label": "Title emphasis", "default": "real" },
+    { "type": "text", "id": "title_after", "label": "Title after emphasis", "default": " results." }
+  ],
+  "blocks": [
+    {
+      "type": "video_item",
+      "name": "Video",
+      "settings": [
+        { "type": "video", "id": "video", "label": "Video" },
+        { "type": "image_picker", "id": "poster", "label": "Poster image", "info": "Shown when no video is uploaded." },
+        { "type": "product", "id": "product", "label": "Linked product" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video showcase",
+      "blocks": [
+        { "type": "video_item" },
+        { "type": "video_item" },
+        { "type": "video_item" },
+        { "type": "video_item" },
+        { "type": "video_item" }
+      ]
+    }
+  ]
+}
+{% endschema %}

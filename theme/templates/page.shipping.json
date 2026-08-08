@@ -1,0 +1,22 @@
+{
+  "sections": {
+    "banner": {
+      "type": "page-banner",
+      "settings": {
+        "eyebrow": "Customer Care",
+        "title": "Shipping",
+        "subtitle": "Complimentary shipping on qualifying orders. Delivered with care."
+      }
+    },
+    "content": {
+      "type": "page-content",
+      "settings": {
+        "content": "<h2>Delivery times</h2><p>Standard shipping typically arrives within 5–7 business days. Express options are available at checkout for select regions.</p><h2>Order tracking</h2><p>Once your order ships, you'll receive a confirmation email with tracking details so you can follow your package every step of the way.</p><h2>International shipping</h2><p>We ship to select countries worldwide. Duties and taxes may apply depending on your location and are calculated at checkout where available.</p>",
+        "show_sidebar": true,
+        "sidebar_title": "Need help?",
+        "sidebar_text": "Questions about your delivery? Reach out via our Contact page and our team will assist you."
+      }
+    }
+  },
+  "order": ["banner", "content"]
+}

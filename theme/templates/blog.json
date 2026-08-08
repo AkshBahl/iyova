@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "blog",
+      "settings": {
+        "eyebrow": "Editorial",
+        "subtitle": "Rituals, innovation, and the art of considered beauty.",
+        "articles_per_page": 9
+      }
+    }
+  },
+  "order": ["main"]
+}

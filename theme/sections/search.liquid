@@ -1,0 +1,22 @@
+{% comment %}
+  Search is disabled — send visitors back to the homepage.
+{% endcomment %}
+
+<script>
+  window.location.replace('{{ routes.root_url }}');
+</script>
+
+<meta http-equiv="refresh" content="0; url={{ routes.root_url }}">
+
+<section class="search-page full-width">
+  <div class="search-page__inner container-editorial">
+    <p><a href="{{ routes.root_url }}">Return to homepage</a></p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Search",
+  "settings": []
+}
+{% endschema %}

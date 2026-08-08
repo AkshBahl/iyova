@@ -1,0 +1,180 @@
+<section class="journal-page full-width">
+  <div class="journal-page__inner container-editorial">
+    <div class="journal-page__header">
+      <p class="text-eyebrow journal-page__eyebrow">{{ section.settings.eyebrow }}</p>
+      <h1 class="font-display journal-page__title">{{ blog.title }}</h1>
+      {% if section.settings.subtitle != blank %}
+        <p class="journal-page__subtitle">{{ section.settings.subtitle }}</p>
+      {% endif %}
+    </div>
+
+    {% paginate blog.articles by section.settings.articles_per_page %}
+      <div class="journal-page__grid">
+        {% for article in blog.articles %}
+          <a href="{{ article.url }}" class="journal-page__card">
+            <div class="journal-page__media">
+              {% if article.image %}
+                {{ article.image | image_url: width: 900 | image_tag: alt: article.image.alt, class: 'journal-page__image', loading: 'lazy' }}
+              {% else %}
+                {{ 'blog-apparel-1' | placeholder_svg_tag: 'journal-page__image journal-page__placeholder' }}
+              {% endif %}
+            </div>
+            <div class="journal-page__body">
+              <p class="journal-page__meta">{{ article.tags.first | default: 'Editorial' }}</p>
+              <h2 class="journal-page__article-title">{{ article.title }}</h2>
+              {% if article.excerpt != blank %}
+                <p class="journal-page__excerpt">{{ article.excerpt | strip_html | truncate: 120 }}</p>
+              {% endif %}
+              <span class="journal-page__cta">Read Article →</span>
+            </div>
+          </a>
+        {% else %}
+          <div class="journal-page__empty">
+            <p>{{ section.settings.empty_text }}</p>
+          </div>
+        {% endfor %}
+      </div>
+
+      {% if paginate.pages > 1 %}
+        <div class="journal-page__pagination">{{ paginate | default_pagination }}</div>
+      {% endif %}
+    {% endpaginate %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .journal-page {
+    padding-top: calc(var(--header-height) + 3rem);
+    padding-bottom: 6rem;
+  }
+
+  .journal-page__header {
+    margin-bottom: 3.5rem;
+    max-width: 40rem;
+  }
+
+  .journal-page__eyebrow {
+    color: var(--luxury-red);
+  }
+
+  .journal-page__title {
+    margin-top: 1rem;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 0.98;
+  }
+
+  .journal-page__subtitle {
+    margin-top: 1rem;
+    color: var(--muted-foreground);
+    line-height: 1.7;
+  }
+
+  .journal-page__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .journal-page__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 2.5rem;
+    }
+  }
+
+  .journal-page__card {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .journal-page__media {
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: var(--cream);
+  }
+
+  .journal-page__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.4s ease;
+  }
+
+  .journal-page__card:hover .journal-page__image {
+    transform: scale(1.05);
+  }
+
+  .journal-page__body {
+    padding-top: 1.5rem;
+  }
+
+  .journal-page__meta {
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--luxury-red);
+  }
+
+  .journal-page__article-title {
+    margin-top: 0.75rem;
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    line-height: 1.3;
+    transition: color 0.3s ease;
+  }
+
+  .journal-page__card:hover .journal-page__article-title {
+    color: var(--luxury-red);
+  }
+
+  .journal-page__excerpt {
+    margin-top: 0.75rem;
+    color: var(--muted-foreground);
+    line-height: 1.6;
+  }
+
+  .journal-page__cta {
+    display: inline-flex;
+    margin-top: 1rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+
+  .journal-page__pagination {
+    margin-top: 4rem;
+    text-align: center;
+  }
+
+  .journal-page__empty {
+    grid-column: 1 / -1;
+    max-width: 32rem;
+    color: var(--muted-foreground);
+    line-height: 1.7;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Journal",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Editorial" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Rituals, innovation, and the art of considered beauty." },
+    {
+      "type": "range",
+      "id": "articles_per_page",
+      "label": "Articles per page",
+      "min": 3,
+      "max": 12,
+      "step": 3,
+      "default": 9
+    },
+    {
+      "type": "textarea",
+      "id": "empty_text",
+      "label": "Empty state text",
+      "default": "Journal articles coming soon. Check back for rituals, innovation stories, and beauty insights from IYOVA."
+    }
+  ]
+}
+{% endschema %}

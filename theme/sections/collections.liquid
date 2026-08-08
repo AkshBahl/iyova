@@ -1,0 +1,105 @@
+<section class="collections-page full-width">
+  <div class="collections-page__inner container-editorial">
+    <div class="collections-page__header">
+      <p class="text-eyebrow collections-page__eyebrow">{{ section.settings.eyebrow }}</p>
+      <h1 class="font-display collections-page__title">{{ 'collections.title' | t }}</h1>
+    </div>
+
+    <div class="collections-page__grid">
+      {% for collection in collections %}
+        <a class="collections-page__card" href="{{ collection.url }}">
+          <div class="collections-page__media">
+            {% if collection.featured_image %}
+              {{ collection.featured_image | image_url: width: 800 | image_tag: alt: collection.title, loading: 'lazy', class: 'collections-page__image' }}
+            {% else %}
+              {{ 'collection-apparel-1' | placeholder_svg_tag: 'collections-page__image collections-page__placeholder' }}
+            {% endif %}
+          </div>
+          <div class="collections-page__body">
+            <h2 class="collections-page__name">{{ collection.title }}</h2>
+            {% if collection.description != blank %}
+              <p class="collections-page__description">{{ collection.description | strip_html | truncatewords: 18 }}</p>
+            {% endif %}
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .collections-page {
+    padding-top: calc(var(--header-height) + 3rem);
+    padding-bottom: 6rem;
+  }
+
+  .collections-page__eyebrow {
+    color: var(--luxury-red);
+  }
+
+  .collections-page__title {
+    margin-top: 1rem;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 0.98;
+  }
+
+  .collections-page__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  @media (min-width: 1024px) {
+    .collections-page__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 2.5rem;
+    }
+  }
+
+  .collections-page__card {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .collections-page__media {
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: var(--cream);
+  }
+
+  .collections-page__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+
+  .collections-page__card:hover .collections-page__image {
+    transform: scale(1.03);
+  }
+
+  .collections-page__name {
+    margin-top: 1rem;
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 400;
+  }
+
+  .collections-page__description {
+    margin-top: 0.5rem;
+    color: var(--muted-foreground);
+    line-height: 1.6;
+    font-size: 0.95rem;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.collections_grid",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Shop" }
+  ],
+  "presets": [{ "name": "t:general.collections_grid" }]
+}
+{% endschema %}

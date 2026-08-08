@@ -1,0 +1,175 @@
+<section class="product-page full-width">
+  <div class="product-page__inner container-editorial">
+    <div class="product-page__grid">
+      <div class="product-page__gallery">
+        {% if product.images.size > 0 %}
+          {% for image in product.images %}
+            <div class="product-page__media">
+              {% if forloop.first %}
+                {{ image | image_url: width: 1200 | image_tag: alt: image.alt | default: product.title, class: 'product-page__image' }}
+              {% else %}
+                {{ image | image_url: width: 1200 | image_tag: alt: image.alt | default: product.title, class: 'product-page__image', loading: 'lazy' }}
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% else %}
+          <div class="product-page__media">
+            {{ 'product-apparel-1' | placeholder_svg_tag: 'product-page__image product-page__placeholder' }}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="product-page__info">
+        <p class="text-eyebrow product-page__eyebrow">{{ section.settings.eyebrow }}</p>
+        <h1 class="font-display product-page__title">{{ product.title }}</h1>
+        <p class="product-page__price">{{ product.selected_or_first_available_variant.price | money_with_currency }}</p>
+
+        {% if product.description != blank %}
+          <div class="product-page__description rte">{{ product.description }}</div>
+        {% endif %}
+
+        {% form 'product', product, class: 'product-page__form' %}
+          {% assign current_variant = product.selected_or_first_available_variant %}
+
+          {% if product.variants.size > 1 %}
+            <div class="product-page__field">
+              <label for="ProductSelect">Variant</label>
+              <select id="ProductSelect" name="id" class="product-page__select">
+                {% for variant in product.variants %}
+                  <option value="{{ variant.id }}" {% if variant == current_variant %}selected{% endif %} {% unless variant.available %}disabled{% endunless %}>
+                    {{ variant.title }} — {{ variant.price | money }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+          {% else %}
+            <input type="hidden" name="id" value="{{ current_variant.id }}">
+          {% endif %}
+
+          <div class="product-page__field">
+            <label for="Quantity">Quantity</label>
+            <input id="Quantity" type="number" name="quantity" min="1" value="1" class="product-page__qty">
+          </div>
+
+          <button type="submit" class="btn-red product-page__submit" {% unless current_variant.available %}disabled{% endunless %}>
+            {% if current_variant.available %}
+              {{ section.settings.add_to_cart_label }}
+            {% else %}
+              {{ section.settings.sold_out_label }}
+            {% endif %}
+          </button>
+
+          {{ form | payment_button }}
+        {% endform %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .product-page {
+    padding-top: calc(var(--header-height) + 2rem);
+    padding-bottom: 6rem;
+  }
+
+  .product-page__grid {
+    display: grid;
+    gap: 3rem;
+  }
+
+  @media (min-width: 1024px) {
+    .product-page__grid {
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 5rem;
+      align-items: start;
+    }
+  }
+
+  .product-page__gallery {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .product-page__media {
+    background: var(--cream);
+    overflow: hidden;
+  }
+
+  .product-page__image {
+    width: 100%;
+    display: block;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+
+  .product-page__eyebrow {
+    color: var(--luxury-red);
+  }
+
+  .product-page__title {
+    margin-top: 1rem;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    line-height: 0.98;
+  }
+
+  .product-page__price {
+    margin-top: 1rem;
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+  }
+
+  .product-page__description {
+    margin-top: 1.5rem;
+    color: var(--muted-foreground);
+    line-height: 1.8;
+  }
+
+  .product-page__form {
+    margin-top: 2rem;
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .product-page__field label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .product-page__select,
+  .product-page__qty {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 1px solid rgba(45, 35, 35, 0.15);
+    background: transparent;
+    font: inherit;
+  }
+
+  .product-page__submit {
+    width: 100%;
+    justify-content: center;
+    border: none;
+    font-family: inherit;
+  }
+
+  .product-page__submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.product",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "IYOVA SKIN" },
+    { "type": "text", "id": "add_to_cart_label", "label": "Add to cart label", "default": "Add to Bag" },
+    { "type": "text", "id": "sold_out_label", "label": "Sold out label", "default": "Sold Out" }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}

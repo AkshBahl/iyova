@@ -1,0 +1,196 @@
+<section class="featured-innovation full-width">
+  <div class="featured-innovation__inner container-editorial">
+    <div class="featured-innovation__grid">
+      <div class="featured-innovation__media">
+        {% if section.settings.image != blank %}
+          {{ section.settings.image | image_url: width: 1000 | image_tag: alt: section.settings.image.alt, class: 'featured-innovation__image' }}
+        {% else %}
+          <img src="{{ 'featured-product.jpg' | asset_url }}" alt="Featured product" class="featured-innovation__image" loading="lazy">
+        {% endif %}
+      </div>
+
+      <div class="featured-innovation__content">
+        <p class="text-eyebrow featured-innovation__eyebrow">{{ section.settings.eyebrow }}</p>
+        <h2 class="font-display featured-innovation__title">
+          {{ section.settings.title_before }}
+          <em>{{ section.settings.title_emphasis }}</em>
+          {{ section.settings.title_after }}
+        </h2>
+        <p class="featured-innovation__text">{{ section.settings.text }}</p>
+
+        <div class="featured-innovation__list">
+          {% for block in section.blocks %}
+            <div class="featured-innovation__item" {{ block.shopify_attributes }}>
+              <span class="featured-innovation__index">0{{ forloop.index }}</span>
+              <div>
+                <h3 class="featured-innovation__item-title">{{ block.settings.title }}</h3>
+                <p>{{ block.settings.text }}</p>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+        <div class="featured-innovation__actions">
+          {% if section.settings.primary_label != blank %}
+            <a href="{{ section.settings.primary_link | default: routes.all_products_collection_url }}" class="btn-red">{{ section.settings.primary_label }}</a>
+          {% endif %}
+          {% if section.settings.secondary_label != blank %}
+            <a href="{{ section.settings.secondary_link }}" class="btn-ghost">{{ section.settings.secondary_label }}</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .featured-innovation {
+    padding-block: 6rem;
+  }
+
+  @media (min-width: 768px) {
+    .featured-innovation {
+      padding-block: 9rem;
+    }
+  }
+
+  .featured-innovation__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  @media (min-width: 1024px) {
+    .featured-innovation__grid {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 4rem;
+    }
+
+    .featured-innovation__media {
+      grid-column: span 6;
+      position: sticky;
+      top: 8rem;
+    }
+
+    .featured-innovation__content {
+      grid-column: span 6;
+      padding-top: 5rem;
+    }
+  }
+
+  .featured-innovation__media {
+    aspect-ratio: 4 / 5;
+    background: var(--cream);
+    overflow: hidden;
+  }
+
+  .featured-innovation__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .featured-innovation__eyebrow {
+    color: var(--luxury-red);
+  }
+
+  .featured-innovation__title {
+    margin-top: 1.25rem;
+    font-size: clamp(2.2rem, 4.8vw, 4rem);
+    line-height: 1.02;
+  }
+
+  .featured-innovation__title em {
+    font-style: italic;
+    color: var(--luxury-red);
+    font-weight: 300;
+  }
+
+  .featured-innovation__text {
+    margin-top: 1.5rem;
+    max-width: 28rem;
+    color: var(--muted-foreground);
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+
+  .featured-innovation__list {
+    margin-top: 3rem;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .featured-innovation__item {
+    display: flex;
+    gap: 1.5rem;
+    border-top: 1px solid rgba(45, 35, 35, 0.15);
+    padding-block: 1.25rem;
+    color: var(--muted-foreground);
+  }
+
+  .featured-innovation__index {
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    color: var(--luxury-red);
+    margin-top: 0.25rem;
+  }
+
+  .featured-innovation__item-title {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    line-height: 1.2;
+    color: var(--text-dark);
+  }
+
+  .featured-innovation__item p {
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+  }
+
+  .featured-innovation__actions {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Featured innovation",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Featured Innovation" },
+    { "type": "text", "id": "title_before", "label": "Title before emphasis", "default": "Technology that" },
+    { "type": "text", "id": "title_emphasis", "label": "Title emphasis", "default": "understands" },
+    { "type": "text", "id": "title_after", "label": "Title after emphasis", "default": "your ritual." },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "A featured innovation from our current collection — engineered with quiet intelligence, finished with considered materials." },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "primary_label", "label": "Primary button", "default": "Shop Now" },
+    { "type": "url", "id": "primary_link", "label": "Primary link" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary button", "default": "Explore Product" },
+    { "type": "url", "id": "secondary_link", "label": "Secondary link" }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Adaptive intelligence" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Sensors respond to your ritual in real time." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured innovation",
+      "blocks": [
+        { "type": "feature", "settings": { "title": "Adaptive intelligence", "text": "Sensors respond to your ritual in real time." } },
+        { "type": "feature", "settings": { "title": "Whisper-quiet motor", "text": "Effortless power, refined performance." } },
+        { "type": "feature", "settings": { "title": "Studio-grade finish", "text": "Crafted from ceramic and rose-gold alloy." } },
+        { "type": "feature", "settings": { "title": "All-day battery", "text": "Designed for the pace of modern life." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

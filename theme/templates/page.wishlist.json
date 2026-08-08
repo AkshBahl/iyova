@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "banner": {
+      "type": "page-banner",
+      "settings": {
+        "eyebrow": "Your Ritual",
+        "title": "Wishlist",
+        "subtitle": "Save the IYOVA pieces you love and return whenever you're ready."
+      }
+    },
+    "content": {
+      "type": "page-content",
+      "settings": {
+        "content": "<p>Your wishlist is empty for now. Explore our collection and save your favourites for later.</p><p><a href=\"/collections/all\" class=\"btn-red\">Shop All</a></p>"
+      }
+    }
+  },
+  "order": ["banner", "content"]
+}

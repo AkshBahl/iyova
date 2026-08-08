@@ -1,0 +1,443 @@
+<header
+  class="site-header{% if section.settings.sticky %} site-header--sticky{% endif %}"
+  data-header
+>
+  <div class="site-header__inner container-editorial">
+    <a href="{{ routes.root_url }}" class="site-header__logo" aria-label="{{ shop.name }} home">
+      {% if section.settings.logo != blank %}
+        {{ section.settings.logo | image_url: width: 240 | image_tag: alt: shop.name, class: 'site-header__logo-image' }}
+      {% else %}
+        <img
+          src="{{ 'iyova-logo.png' | asset_url }}"
+          alt="{{ shop.name }}"
+          class="site-header__logo-image"
+          width="120"
+          height="36"
+          loading="eager"
+        >
+      {% endif %}
+    </a>
+
+    <nav class="site-header__nav" aria-label="Main navigation">
+      {% if section.settings.use_default_nav %}
+        {% render 'iyova-nav', mega_eyebrow: section.settings.mega_eyebrow, mega_title: section.settings.mega_title %}
+      {% elsif section.settings.menu != blank %}
+        {% for link in section.settings.menu.links %}
+          <div class="site-header__nav-item{% if link.links.size > 0 %} site-header__nav-item--has-mega{% endif %}">
+            <a href="{{ link.url }}" class="site-header__nav-link">{{ link.title }}</a>
+
+            {% if link.links.size > 0 %}
+              <div class="site-header__mega">
+                <div class="site-header__mega-grid container-editorial">
+                  <div class="site-header__mega-intro">
+                    <p class="text-eyebrow site-header__mega-eyebrow">{{ section.settings.mega_eyebrow }}</p>
+                    <h3 class="font-display site-header__mega-title">{{ section.settings.mega_title }}</h3>
+                    <div class="site-header__mega-links">
+                      <a href="{{ routes.all_products_collection_url }}">{{ 'sections.header.shop_all' | t }}</a>
+                      <a href="{{ routes.collections_url }}">{{ 'sections.header.collections' | t }}</a>
+                    </div>
+                  </div>
+
+                  {% for child in link.links %}
+                    <div class="site-header__mega-col">
+                      <p class="text-eyebrow site-header__mega-col-title">{{ child.title }}</p>
+                      {% if child.links.size > 0 %}
+                        <ul class="site-header__mega-list">
+                          {% for grandchild in child.links %}
+                            <li>
+                              <a href="{{ grandchild.url }}">{{ grandchild.title }}</a>
+                            </li>
+                          {% endfor %}
+                        </ul>
+                      {% else %}
+                        <ul class="site-header__mega-list">
+                          <li>
+                            <a href="{{ child.url }}">{{ child.title }}</a>
+                          </li>
+                        </ul>
+                      {% endif %}
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      {% else %}
+        {% render 'iyova-nav', mega_eyebrow: section.settings.mega_eyebrow, mega_title: section.settings.mega_title %}
+      {% endif %}
+    </nav>
+
+    <div class="site-header__actions">
+      {% if shop.customer_accounts_enabled %}
+        <a href="{{ routes.account_url }}" class="icon-btn site-header__icon--desktop" aria-label="{{ 'sections.header.account' | t }}">
+          {% render 'icon-account' %}
+        </a>
+      {% endif %}
+
+      <a href="{{ pages['wishlist'].url | default: routes.account_url }}" class="icon-btn site-header__icon--desktop" aria-label="{{ 'sections.header.wishlist' | t }}">
+        {% render 'icon-heart' %}
+      </a>
+
+      <a href="{{ routes.cart_url }}" class="icon-btn site-header__cart" aria-label="{{ 'sections.header.cart' | t }}">
+        {% render 'icon-cart' %}
+        {% if cart.item_count > 0 %}
+          <span class="site-header__cart-count">{{ cart.item_count }}</span>
+        {% endif %}
+      </a>
+
+      <button
+        type="button"
+        class="icon-btn site-header__menu-toggle"
+        aria-label="{{ 'sections.header.open_menu' | t }}"
+        aria-expanded="false"
+        data-menu-toggle
+      >
+        {% render 'icon-menu' %}
+      </button>
+    </div>
+  </div>
+
+  <div class="site-header__mobile" hidden data-mobile-menu>
+    <div class="site-header__mobile-top container-editorial">
+      <a href="{{ routes.root_url }}" aria-label="{{ shop.name }} home">
+        {% if section.settings.logo != blank %}
+          {{ section.settings.logo | image_url: width: 240 | image_tag: alt: shop.name, class: 'site-header__logo-image' }}
+        {% else %}
+          <img
+            src="{{ 'iyova-logo.png' | asset_url }}"
+            alt="{{ shop.name }}"
+            class="site-header__logo-image"
+            width="120"
+            height="36"
+          >
+        {% endif %}
+      </a>
+      <button type="button" class="icon-btn" aria-label="{{ 'sections.header.close_menu' | t }}" data-menu-close>
+        {% render 'icon-close' %}
+      </button>
+    </div>
+
+    <nav class="site-header__mobile-nav container-editorial" aria-label="Mobile navigation">
+      {% render 'iyova-nav-mobile' %}
+    </nav>
+  </div>
+</header>
+
+{% stylesheet %}
+  .site-header {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 50;
+    transition: background-color 0.5s ease, border-color 0.5s ease, backdrop-filter 0.5s ease;
+  }
+
+  .site-header--scrolled {
+    background: color-mix(in oklab, var(--ivory) 82%, transparent);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(45, 35, 35, 0.1);
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--header-height);
+  }
+
+  .site-header__logo-image {
+    height: 1.75rem;
+    width: auto;
+  }
+
+  @media (min-width: 768px) {
+    .site-header__logo-image {
+      height: 2.25rem;
+    }
+  }
+
+  .site-header__nav {
+    display: none;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 1280px) {
+    .site-header__nav {
+      gap: 2rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .site-header__nav {
+      display: flex;
+    }
+  }
+
+  .site-header__nav-link {
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--text-dark);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .site-header__nav-link:hover {
+    color: var(--luxury-red);
+  }
+
+  .site-header__nav-item {
+    position: static;
+  }
+
+  .site-header__mega {
+    position: absolute;
+    inset: var(--header-height) 0 auto;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s ease;
+    background: color-mix(in oklab, var(--ivory) 95%, transparent);
+    backdrop-filter: blur(18px);
+    border-top: 1px solid rgba(45, 35, 35, 0.1);
+    border-bottom: 1px solid rgba(45, 35, 35, 0.1);
+  }
+
+  .site-header__nav-item--has-mega:hover .site-header__mega,
+  .site-header__nav-item--has-mega:focus-within .site-header__mega {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .site-header__mega-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 2.5rem;
+    padding-block: 3.5rem;
+  }
+
+  .site-header__mega-intro {
+    grid-column: span 3;
+  }
+
+  .site-header__mega-eyebrow {
+    color: var(--luxury-red);
+  }
+
+  .site-header__mega-title {
+    margin-top: 1rem;
+    font-size: clamp(2rem, 3vw, 2.4rem);
+    line-height: 0.95;
+  }
+
+  .site-header__mega-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .site-header__mega-links a {
+    color: var(--text-dark);
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+
+  .site-header__mega-links a:hover {
+    color: var(--luxury-red);
+  }
+
+  .site-header__mega-col {
+    grid-column: span 2;
+  }
+
+  .site-header__mega-col-title {
+    color: var(--muted-foreground);
+    margin-bottom: 1.25rem;
+  }
+
+  .site-header__mega-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .site-header__mega-list a {
+    color: var(--text-dark);
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+
+  .site-header__mega-list a:hover {
+    color: var(--luxury-red);
+  }
+
+  .site-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .site-header__actions {
+      gap: 0.5rem;
+    }
+  }
+
+  .site-header__icon--desktop {
+    display: none;
+  }
+
+  @media (min-width: 640px) {
+    .site-header__icon--desktop {
+      display: inline-flex;
+    }
+  }
+
+  .site-header__cart {
+    position: relative;
+  }
+
+  .site-header__cart-count {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 18px;
+    height: 18px;
+    padding-inline: 4px;
+    border-radius: 999px;
+    background: var(--luxury-red);
+    color: var(--ivory);
+    font-size: 10px;
+    font-weight: 500;
+    display: grid;
+    place-items: center;
+  }
+
+  .site-header__menu-toggle {
+    display: inline-flex;
+  }
+
+  @media (min-width: 1024px) {
+    .site-header__menu-toggle {
+      display: none;
+    }
+  }
+
+  .site-header__mobile {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    background: var(--ivory);
+    overflow-y: auto;
+  }
+
+  .site-header__mobile-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--header-height);
+  }
+
+  .site-header__mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .site-header__mobile-link {
+    font-size: clamp(2rem, 8vw, 2.6rem);
+    color: var(--text-dark);
+    text-decoration: none;
+  }
+
+  .site-header__mobile-link:hover {
+    color: var(--luxury-red);
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  const header = document.querySelector('[data-header]');
+  const menuToggle = document.querySelector('[data-menu-toggle]');
+  const menuClose = document.querySelector('[data-menu-close]');
+  const mobileMenu = document.querySelector('[data-mobile-menu]');
+
+  const setScrolled = () => {
+    if (!header) return;
+    header.classList.toggle('site-header--scrolled', window.scrollY > 40);
+  };
+
+  setScrolled();
+  window.addEventListener('scroll', setScrolled, { passive: true });
+
+  const openMenu = () => {
+    if (!mobileMenu || !menuToggle) return;
+    mobileMenu.hidden = false;
+    menuToggle.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeMenu = () => {
+    if (!mobileMenu || !menuToggle) return;
+    mobileMenu.hidden = true;
+    menuToggle.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  };
+
+  menuToggle?.addEventListener('click', openMenu);
+  menuClose?.addEventListener('click', closeMenu);
+  mobileMenu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', closeMenu);
+  });
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:general.header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "t:labels.logo"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_default_nav",
+      "label": "Use IYOVA default navigation",
+      "default": true,
+      "info": "Shows Shop, About Us, Journal, Warranty Registration, and Contact Us."
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "t:labels.menu",
+      "default": "main-menu",
+      "info": "Used only when default navigation is disabled."
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky",
+      "label": "Sticky header",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "mega_eyebrow",
+      "label": "Mega menu eyebrow",
+      "default": "The Collection"
+    },
+    {
+      "type": "text",
+      "id": "mega_title",
+      "label": "Mega menu title",
+      "default": "A ritual for every part of you."
+    }
+  ]
+}
+{% endschema %}

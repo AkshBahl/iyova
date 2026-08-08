@@ -1,0 +1,186 @@
+<section class="community full-width">
+  <div class="community__inner container-editorial">
+    <div class="community__header">
+      <div>
+        <p class="text-eyebrow community__eyebrow">{{ section.settings.eyebrow }}</p>
+        <h2 class="font-display community__title">
+          {{ section.settings.title_line_1 }}<br>
+          <em>{{ section.settings.title_emphasis }}</em>
+        </h2>
+      </div>
+      {% if section.settings.social_handle != blank %}
+        <a href="{{ section.settings.social_url | default: '#' }}" class="community__handle">
+          {{ section.settings.social_handle }} →
+        </a>
+      {% endif %}
+    </div>
+
+    <div class="community__grid">
+      {% for block in section.blocks %}
+        <a
+          href="{{ block.settings.link | default: section.settings.social_url | default: '#' }}"
+          class="community__tile community__tile--{{ block.settings.layout }}"
+          {{ block.shopify_attributes }}
+        >
+          {% if block.settings.image != blank %}
+            {{ block.settings.image | image_url: width: 800 | image_tag: alt: '', class: 'community__image' }}
+          {% else %}
+            <img src="{{ block.settings.fallback_image | asset_url }}" alt="" class="community__image" loading="lazy">
+          {% endif %}
+          <span class="community__overlay">View Story</span>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .community {
+    background: var(--cream);
+    padding-block: 6rem;
+  }
+
+  @media (min-width: 768px) {
+    .community {
+      padding-block: 8rem;
+    }
+  }
+
+  .community__header {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+
+  .community__eyebrow {
+    color: var(--luxury-red);
+  }
+
+  .community__title {
+    margin-top: 1rem;
+    font-size: clamp(2.2rem, 5vw, 4.5rem);
+    line-height: 1.02;
+  }
+
+  .community__title em {
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  .community__handle {
+    font-size: 0.72rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--text-dark);
+    text-decoration: none;
+  }
+
+  .community__handle:hover {
+    color: var(--luxury-red);
+  }
+
+  .community__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    grid-auto-rows: 180px;
+  }
+
+  @media (min-width: 768px) {
+    .community__grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
+      grid-auto-rows: 230px;
+    }
+  }
+
+  .community__tile {
+    position: relative;
+    overflow: hidden;
+    display: block;
+  }
+
+  .community__tile--tall {
+    grid-row: span 2;
+  }
+
+  .community__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.4s ease;
+  }
+
+  .community__tile:hover .community__image {
+    transform: scale(1.05);
+  }
+
+  .community__overlay {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: rgba(45, 35, 35, 0);
+    color: var(--ivory);
+    font-size: 0.72rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 0.3s ease, background 0.3s ease;
+  }
+
+  .community__tile:hover .community__overlay {
+    opacity: 1;
+    background: rgba(45, 35, 35, 0.4);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Community",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The IYOVA Community" },
+    { "type": "text", "id": "title_line_1", "label": "Title line 1", "default": "Beauty looks" },
+    { "type": "text", "id": "title_emphasis", "label": "Title emphasis", "default": "different on everyone." },
+    { "type": "text", "id": "social_handle", "label": "Social handle", "default": "@iyovaskin" },
+    { "type": "url", "id": "social_url", "label": "Social URL" }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "fallback_image", "label": "Fallback asset", "default": "cat-face.jpg" },
+        { "type": "url", "id": "link", "label": "Link" },
+        {
+          "type": "select",
+          "id": "layout",
+          "label": "Layout",
+          "default": "regular",
+          "options": [
+            { "value": "regular", "label": "Regular" },
+            { "value": "tall", "label": "Tall" }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Community",
+      "blocks": [
+        { "type": "image", "settings": { "fallback_image": "cat-face.jpg", "layout": "tall" } },
+        { "type": "image", "settings": { "fallback_image": "cat-hair.jpg" } },
+        { "type": "image", "settings": { "fallback_image": "cat-body.jpg" } },
+        { "type": "image", "settings": { "fallback_image": "cat-personal.jpg" } },
+        { "type": "image", "settings": { "fallback_image": "hero-product.jpg", "layout": "tall" } },
+        { "type": "image", "settings": { "fallback_image": "featured-product.jpg" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

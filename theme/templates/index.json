@@ -1,0 +1,158 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "primary_button_label": "Shop the collection"
+      }
+    },
+    "categories": {
+      "type": "categories",
+      "blocks": {
+        "cat-1": {
+          "type": "category",
+          "settings": {
+            "title": "LED facial therapy mask",
+            "eyebrow": "01 / Device",
+            "layout": "tall",
+            "fallback_image": "cat-face.jpg"
+          }
+        },
+        "cat-2": {
+          "type": "category",
+          "settings": {
+            "title": "Air multi-styler",
+            "eyebrow": "02 / Device",
+            "layout": "regular",
+            "fallback_image": "cat-hair.jpg"
+          }
+        },
+        "cat-3": {
+          "type": "category",
+          "settings": {
+            "title": "Facial sculpting device",
+            "eyebrow": "03 / Device",
+            "layout": "short",
+            "fallback_image": "cat-body.jpg"
+          }
+        }
+      },
+      "block_order": ["cat-1", "cat-2", "cat-3"],
+      "settings": {
+        "eyebrow": "Shop the range",
+        "subtitle": "Our most-loved devices — trusted favourites chosen again and again."
+      }
+    },
+    "philosophy": { "type": "philosophy", "settings": {} },
+    "beauty_tech": {
+      "type": "beauty-tech",
+      "blocks": {
+        "f1": { "type": "feature", "settings": { "title": "Intelligent Design", "text": "Thoughtfully engineered technology for modern beauty rituals." } },
+        "f2": { "type": "feature", "settings": { "title": "Effortless Experience", "text": "Premium beauty care designed to fit seamlessly into everyday life." } },
+        "f3": { "type": "feature", "settings": { "title": "Designed to Elevate", "text": "Where performance meets timeless, considered design." } }
+      },
+      "block_order": ["f1", "f2", "f3"],
+      "settings": {
+        "primary_label": "Shop Now",
+        "secondary_label": "Explore Product"
+      }
+    },
+    "why_iyova": {
+      "type": "why-iyova",
+      "blocks": {
+        "w1": { "type": "item", "settings": { "title": "Thoughtful Innovation", "text": "Technology developed with intention and purpose." } },
+        "w2": { "type": "item", "settings": { "title": "Premium Quality", "text": "Refined materials, considered craftsmanship." } },
+        "w3": { "type": "item", "settings": { "title": "Clinically Approved", "text": "Rigorously validated for safety, efficacy, and trusted results." } },
+        "w4": { "type": "item", "settings": { "title": "Safe for All Skin Types", "text": "Gentle, considered formulas suitable for every skin type." } },
+        "w5": { "type": "item", "settings": { "title": "Clinically Tested Products", "text": "Every device tested to meet the highest clinical standards." } }
+      },
+      "block_order": ["w1", "w2", "w3", "w4", "w5"],
+      "settings": {}
+    },
+    "video_banner": {
+      "type": "video-banner",
+      "blocks": {
+        "v1": { "type": "video_item", "settings": {} },
+        "v2": { "type": "video_item", "settings": {} },
+        "v3": { "type": "video_item", "settings": {} },
+        "v4": { "type": "video_item", "settings": {} },
+        "v5": { "type": "video_item", "settings": {} }
+      },
+      "block_order": ["v1", "v2", "v3", "v4", "v5"],
+      "settings": {
+        "eyebrow": "Community",
+        "title_before": "Real people,",
+        "title_emphasis": "real",
+        "title_after": " results."
+      }
+    },
+    "reviews": {
+      "type": "reviews",
+      "blocks": {
+        "r1": { "type": "review", "settings": { "quote": "It's become the most considered part of my evening. My skin has never looked more luminous — genuinely elevated.", "name": "Amara L.", "product": "IYOVA LED Facial Therapy Mask" } },
+        "r2": { "type": "review", "settings": { "quote": "Salon-quality without the salon. The design alone feels like a small daily indulgence.", "name": "Sienna R.", "product": "IYOVA Air Multi-Styler" } },
+        "r3": { "type": "review", "settings": { "quote": "Visible, quiet confidence. Two weeks in and I noticed the difference in the mirror before anyone else did.", "name": "Noor K.", "product": "IYOVA Facial Sculpting Device" } }
+      },
+      "block_order": ["r1", "r2", "r3"],
+      "settings": {}
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "What makes IYOVA devices different from traditional skincare tools?",
+            "answer": "<p>Our devices combine advanced technology with considered design — featuring multiple modes, precision engineering, and materials chosen for safer, more effective results at home.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "Are IYOVA devices safe for sensitive skin?",
+            "answer": "<p>Yes. All our devices include adjustable intensity settings and skin-friendly materials. We recommend starting on the lowest setting and consulting your dermatologist if you have specific concerns.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "Are IYOVA devices suitable for all ages?",
+            "answer": "<p>Our devices are designed for ages 16 and above. For users under 18, we recommend adult supervision and consultation with a dermatologist for specific skin concerns.</p>"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "question": "Do you offer customer support for device setup?",
+            "answer": "<p>Absolutely. Our team is available via chat, email, and phone — plus detailed video tutorials and user manuals to help you get started with ease.</p>"
+          }
+        },
+        "q5": {
+          "type": "question",
+          "settings": {
+            "question": "What's included in the warranty?",
+            "answer": "<p>Every IYOVA device is backed by a limited warranty. Visit our Warranty Registration page for full details and eligibility.</p>"
+          }
+        }
+      },
+      "block_order": ["q1", "q2", "q3", "q4", "q5"],
+      "settings": {
+        "eyebrow": "Support"
+      }
+    },
+    "journal": { "type": "journal", "settings": { "articles_to_show": 3 } },
+    "newsletter": { "type": "newsletter", "settings": {} }
+  },
+  "order": [
+    "hero",
+    "categories",
+    "philosophy",
+    "journal",
+    "beauty_tech",
+    "why_iyova",
+    "video_banner",
+    "reviews",
+    "faq",
+    "newsletter"
+  ]
+}

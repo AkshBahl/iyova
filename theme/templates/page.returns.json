@@ -1,0 +1,22 @@
+{
+  "sections": {
+    "banner": {
+      "type": "page-banner",
+      "settings": {
+        "eyebrow": "Customer Care",
+        "title": "Returns",
+        "subtitle": "We want you to love every IYOVA ritual. If something isn't right, we're here to help."
+      }
+    },
+    "content": {
+      "type": "page-content",
+      "settings": {
+        "content": "<h2>Return policy</h2><p>Unopened products in original packaging may be returned within 30 days of delivery for a full refund or exchange.</p><h2>How to start a return</h2><p>Contact our customer care team with your order number. We'll provide a prepaid return label where eligible and guide you through the process.</p><h2>Refunds</h2><p>Refunds are processed to your original payment method within 5–10 business days after we receive and inspect your return.</p>",
+        "show_sidebar": true,
+        "sidebar_title": "Warranty",
+        "sidebar_text": "Register your device for extended coverage and priority support through our Warranty Registration page."
+      }
+    }
+  },
+  "order": ["banner", "content"]
+}

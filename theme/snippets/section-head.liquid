@@ -1,0 +1,71 @@
+{% doc %}
+  Renders a reusable IYOVA section heading.
+
+  @param {string} eyebrow - Small uppercase label
+  @param {string} title - Main heading HTML
+  @param {string} [subtitle] - Optional supporting text
+  @param {string} [align] - left or center
+  @param {string} [eyebrow_position] - above or below_title
+{% enddoc %}
+
+<div class="section-head{% if align == 'center' %} section-head--center{% endif %}">
+  {% if eyebrow != blank and eyebrow_position != 'below_title' %}
+    <p class="text-eyebrow section-head__eyebrow">{{ eyebrow }}</p>
+  {% endif %}
+  <h2 class="font-display section-head__title">{{ title }}</h2>
+  {% if eyebrow != blank and eyebrow_position == 'below_title' %}
+    <p class="text-eyebrow section-head__eyebrow section-head__eyebrow--below">{{ eyebrow }}</p>
+  {% endif %}
+  {% if subtitle != blank %}
+    <p class="section-head__subtitle">{{ subtitle }}</p>
+  {% endif %}
+</div>
+
+{% stylesheet %}
+  .section-head__eyebrow {
+    color: var(--luxury-red);
+  }
+
+  .section-head__eyebrow--below {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+  }
+
+  .section-head__title {
+    margin-top: 1rem;
+    font-size: clamp(2.2rem, 5vw, 4.5rem);
+    line-height: 1.02;
+  }
+
+  .section-head__eyebrow + .section-head__title {
+    margin-top: 1rem;
+  }
+
+  .section-head__title:first-child {
+    margin-top: 0;
+  }
+
+  .section-head__title em {
+    font-style: italic;
+    color: var(--luxury-red);
+    font-weight: 300;
+  }
+
+  .section-head__subtitle {
+    margin-top: 1.25rem;
+    max-width: 36rem;
+    color: var(--muted-foreground);
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+
+  .section-head--center {
+    text-align: center;
+    margin-inline: auto;
+    max-width: 48rem;
+  }
+
+  .section-head--center .section-head__subtitle {
+    margin-inline: auto;
+  }
+{% endstylesheet %}
